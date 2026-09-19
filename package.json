@@ -4,7 +4,7 @@
   "private": true,
   "description": "Africa Invest — invest in Africa from anywhere. Production-minded MVP.",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --hostname 0.0.0.0 --port 3000",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",

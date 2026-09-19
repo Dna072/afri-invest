@@ -82,6 +82,15 @@ npm run dev
 
 Open http://localhost:3000
 
+### Cursor Cloud environment
+
+Cloud Agents use `.cursor/environment.json`:
+
+- **install** installs dependencies, creates `.env` from `.env.example`, pushes the Prisma schema, and seeds demo data if it is not already present
+- **start** runs `npm run dev` on `0.0.0.0:3000` so the preview can reach the app
+
+Save the environment from the Cursor dashboard after a successful environment build so new agents boot with the app ready. No production secrets are required for the sandbox.
+
 ## How to seed / reset demo
 
 ```bash

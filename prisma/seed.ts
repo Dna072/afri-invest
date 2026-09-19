@@ -8,6 +8,11 @@ const DEMO_PASSWORD = "AfricaInvest!demo";
 
 async function main() {
   console.log("Seeding Africa Invest sandbox…");
+  const alreadySeeded = await prisma.user.findUnique({ where: { email: "derrick@africainvest.demo" } });
+  if (alreadySeeded) {
+    console.log("Demo data already present. Skipping seed. Use npm run reset-demo to rebuild.");
+    return;
+  }
   const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
 
   await prisma.$transaction(CURRENCY_SEED.map((c) => prisma.currency.upsert({ where: { code: c.code }, update: c, create: c })));
