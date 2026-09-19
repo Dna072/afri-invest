@@ -1,0 +1,1085 @@
+// Africa Invest — modular monolith schema.
+// SQLite for local MVP. Production target is PostgreSQL (see docs/production-migration.md).
+// Monetary amounts are stored as decimal strings. Never use floating point.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  passwordHash       String
+  firstName          String
+  lastName           String
+  displayName        String
+  nationality        String
+  countryOfResidence String
+  primaryCurrency    String
+  role               String    @default("customer")
+  status             String    @default("active")
+  emailVerifiedAt    DateTime?
+  locale             String    @default("en")
+  timezone           String    @default("UTC")
+  isDemoPersona      Boolean   @default(false)
+  personaKey         String?   @unique
+  dataClassification String    @default("confidential")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+
+  profile            Profile?
+  investorProfile    InvestorProfile?
+  taxProfile         TaxProfile?
+  securityProfile    SecurityProfile?
+  kycProfile         KycProfile?
+  privacyPreference  PrivacyPreference?
+  accounts           Account[]
+  sessions           Session[]
+  devices            Device[]
+  notifications      Notification[]
+  watchlists         Watchlist[]
+  goals              InvestmentGoal[]
+  documents          Document[]
+  complaints         Complaint[]
+  educationProgress  EducationProgress[]
+  savedArticles      SavedArticle[]
+  priceAlerts        PriceAlert[]
+  consents           Consent[]
+  dataSubjectRequests DataSubjectRequest[]
+  waitlistEntries    WaitlistEntry[]
+  supportTickets     SupportTicket[]
+  subscriptions      Subscription[]
+  auditEvents        AuditEvent[]        @relation("AuditActor")
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  phone     String?
+  dateOfBirth String?
+  city      String?
+  addressLine String?
+  occupation String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InvestorProfile {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id])
+  experience          String
+  horizon             String
+  objective           String
+  riskTolerance       String
+  liquidityNeeds      String
+  resultBand          String
+  isEducationalOnly   Boolean  @default(true)
+  completedAt         DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model TaxProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id])
+  taxResidence   String
+  tinMasked      String?
+  usPerson       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  taxResidences  TaxResidence[]
+}
+
+model SecurityProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id])
+  mfaEnabled         Boolean  @default(false)
+  mfaMethod          String?
+  passkeysEnabled    Boolean  @default(false)
+  biometricsEnabled  Boolean  @default(false)
+  failedLoginCount   Int      @default(0)
+  lockedUntil        DateTime?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  tokenHash  String   @unique
+  ip         String?
+  userAgent  String?
+  deviceName String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime @default(now())
+}
+
+model Device {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  platform    String
+  lastSeenAt  DateTime @default(now())
+  trusted     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Account {
+  id                   String   @id @default(cuid())
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id])
+  type                 String   @default("investment")
+  status               String   @default("active")
+  baseCurrency         String
+  label                String
+  safeguardingClass    String   @default("customer_assets")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  currencyBalances     CurrencyBalance[]
+  positions            Position[]
+  orders               Order[]
+  payments             Payment[]
+  withdrawals          Withdrawal[]
+  fxQuotes             FxQuote[]
+  fxConversions        FxConversion[]
+  dividends            Dividend[]
+  autoInvestPlans      AutoInvestPlan[]
+  transactions         Transaction[]
+  documents            Document[]
+  goals                InvestmentGoal[]
+  ledgerAccounts       LedgerAccount[]
+  ipoApplications      IpoApplication[]
+}
+
+model Currency {
+  code          String   @id
+  name          String
+  symbol        String
+  decimals      Int      @default(2)
+  active        Boolean  @default(true)
+  displayOrder  Int      @default(0)
+}
+
+model CurrencyBalance {
+  id            String   @id @default(cuid())
+  accountId     String
+  account       Account  @relation(fields: [accountId], references: [id])
+  currency      String
+  available     String   @default("0")
+  pending       String   @default("0")
+  reserved      String   @default("0")
+  updatedAt     DateTime @updatedAt
+
+  @@unique([accountId, currency])
+}
+
+model Market {
+  id            String   @id
+  name          String
+  country       String
+  countryCode   String
+  continent     String   @default("Africa")
+  currency      String
+  status        String
+  description   String
+  timezone      String
+  featureFlag   String
+  createdAt     DateTime @default(now())
+  exchanges     Exchange[]
+  assets        Asset[]
+  calendars     TradingCalendar[]
+}
+
+model Exchange {
+  id            String   @id
+  marketId      String
+  market        Market   @relation(fields: [marketId], references: [id])
+  name          String
+  mic           String?
+  currency      String
+  status        String
+  assets        Asset[]
+}
+
+model TradingCalendar {
+  id            String   @id @default(cuid())
+  marketId      String
+  market        Market   @relation(fields: [marketId], references: [id])
+  timezone      String
+  openTime      String
+  closeTime     String
+  tradingDays   String
+  holidaysJson  String   @default("[]")
+}
+
+model Asset {
+  id                  String   @id @default(cuid())
+  symbol              String
+  name                String
+  issuer              String
+  marketId            String
+  market              Market   @relation(fields: [marketId], references: [id])
+  exchangeId          String
+  exchange            Exchange @relation(fields: [exchangeId], references: [id])
+  country             String
+  currency            String
+  assetType           String
+  description         String
+  riskCategory        String
+  tradability         String
+  minimumInvestment   String   @default("0")
+  price               String
+  previousClose       String
+  changePercent       String
+  dividendYield       String?
+  marketCap           String?
+  week52High          String?
+  week52Low           String?
+  sector              String?
+  isin                String?
+  figi                String?
+  localId             String?
+  status              String   @default("sandbox")
+  dataSource          String   @default("sandbox")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  positions           Position[]
+  orders              Order[]
+  watchlistItems      WatchlistItem[]
+  priceAlerts         PriceAlert[]
+  dividends           Dividend[]
+  priceHistory        PriceHistory[]
+  ipoOffers           IpoOffer[]
+  bondTerms           BondTerms?
+
+  @@unique([symbol, exchangeId])
+}
+
+model BondTerms {
+  id                    String   @id @default(cuid())
+  assetId               String   @unique
+  asset                 Asset    @relation(fields: [assetId], references: [id])
+  yieldPercent          String
+  maturityDate          DateTime
+  coupon                String?
+  faceValue             String   @default("100")
+  instrumentKind        String
+}
+
+model IpoOffer {
+  id                  String   @id @default(cuid())
+  assetId             String
+  asset               Asset    @relation(fields: [assetId], references: [id])
+  offerPrice          String
+  subscriptionOpen    DateTime
+  subscriptionClose   DateTime
+  minimumInvestment   String
+  status              String
+  riskInformation     String
+  applications        IpoApplication[]
+}
+
+model IpoApplication {
+  id            String   @id @default(cuid())
+  offerId       String
+  offer         IpoOffer @relation(fields: [offerId], references: [id])
+  accountId     String
+  account       Account  @relation(fields: [accountId], references: [id])
+  amount        String
+  currency      String
+  status        String
+  createdAt     DateTime @default(now())
+}
+
+model PriceHistory {
+  id        String   @id @default(cuid())
+  assetId   String
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  ts        DateTime
+  open      String
+  high      String
+  low       String
+  close     String
+  volume    String?
+
+  @@index([assetId, ts])
+}
+
+model Order {
+  id               String   @id @default(cuid())
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  assetId          String
+  asset            Asset    @relation(fields: [assetId], references: [id])
+  side             String
+  quantity         String
+  filledQuantity   String   @default("0")
+  orderType        String
+  limitPrice       String?
+  estimatedValue   String
+  fees             String
+  currency         String
+  status           String
+  idempotencyKey   String   @unique
+  providerRef      String?
+  submittedAt      DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  executions       Execution[]
+  settlements      Settlement[]
+}
+
+model Execution {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  quantity    String
+  price       String
+  currency    String
+  executedAt  DateTime @default(now())
+  providerRef String?
+}
+
+model Settlement {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id])
+  status      String
+  settledAt   DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Position {
+  id              String   @id @default(cuid())
+  accountId       String
+  account         Account  @relation(fields: [accountId], references: [id])
+  assetId         String
+  asset           Asset    @relation(fields: [assetId], references: [id])
+  quantity        String
+  averageCost     String
+  costBasis       String
+  realizedPnl     String   @default("0")
+  currency        String
+  updatedAt       DateTime @updatedAt
+
+  @@unique([accountId, assetId])
+}
+
+model Transaction {
+  id               String   @id @default(cuid())
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  type             String
+  status           String
+  amount           String
+  currency         String
+  description      String
+  counterAmount    String?
+  counterCurrency  String?
+  relatedId        String?
+  ledgerTxnId      String?
+  createdAt        DateTime @default(now())
+}
+
+model Payment {
+  id               String   @id @default(cuid())
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  method           String
+  amount           String
+  currency         String
+  status           String
+  idempotencyKey   String   @unique
+  providerRef      String?
+  failureReason    String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Withdrawal {
+  id               String   @id @default(cuid())
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  amount           String
+  currency         String
+  destination      String
+  destinationLabel String
+  status           String
+  idempotencyKey   String   @unique
+  requiresApproval Boolean  @default(false)
+  approvedById     String?
+  failureReason    String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  approvalRequests ApprovalRequest[]
+}
+
+model FxRate {
+  id           String   @id @default(cuid())
+  baseCurrency String
+  quoteCurrency String
+  sourceRate   String
+  spreadBps    String
+  asOf         DateTime @default(now())
+
+  @@unique([baseCurrency, quoteCurrency])
+}
+
+model FxQuote {
+  id                String   @id @default(cuid())
+  accountId         String
+  account           Account  @relation(fields: [accountId], references: [id])
+  baseCurrency      String
+  quoteCurrency     String
+  sourceRate        String
+  platformFee       String
+  spread            String
+  customerAmount    String
+  amountReceived    String
+  feeCurrency       String
+  expiresAt         DateTime
+  status            String
+  createdAt         DateTime @default(now())
+  conversion        FxConversion?
+}
+
+model FxConversion {
+  id               String   @id @default(cuid())
+  quoteId          String   @unique
+  quote            FxQuote  @relation(fields: [quoteId], references: [id])
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  status           String
+  idempotencyKey   String   @unique
+  ledgerTxnId      String?
+  createdAt        DateTime @default(now())
+}
+
+model Dividend {
+  id            String   @id @default(cuid())
+  accountId     String
+  account       Account  @relation(fields: [accountId], references: [id])
+  assetId       String
+  asset         Asset    @relation(fields: [assetId], references: [id])
+  grossAmount   String
+  withholding   String
+  netAmount     String
+  currency      String
+  status        String
+  payableDate   DateTime
+  createdAt     DateTime @default(now())
+}
+
+model AutoInvestPlan {
+  id              String   @id @default(cuid())
+  accountId       String
+  account         Account  @relation(fields: [accountId], references: [id])
+  name            String
+  fundingSource   String
+  fundingCurrency String
+  schedule        String
+  amount          String
+  maxAmount       String?
+  allocationJson  String
+  status          String
+  nextExecution   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model InvestmentGoal {
+  id                   String   @id @default(cuid())
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id])
+  accountId            String?
+  account              Account? @relation(fields: [accountId], references: [id])
+  type                 String
+  name                 String
+  targetAmount         String
+  currentAmount        String
+  currency             String
+  targetDate           DateTime
+  monthlyContribution  String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Watchlist {
+  id        String          @id @default(cuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  name      String          @default("Default")
+  items     WatchlistItem[]
+  createdAt DateTime        @default(now())
+}
+
+model WatchlistItem {
+  id          String    @id @default(cuid())
+  watchlistId String
+  watchlist   Watchlist @relation(fields: [watchlistId], references: [id])
+  assetId     String
+  asset       Asset     @relation(fields: [assetId], references: [id])
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+
+  @@unique([watchlistId, assetId])
+}
+
+model PriceAlert {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  assetId   String
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  operator  String
+  price     String
+  currency  String
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  category  String
+  channel   String   @default("in_app")
+  title     String
+  body      String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+model KycProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  status      String
+  riskRating  String   @default("medium")
+  updatedAt   DateTime @updatedAt
+  sessions    VerificationSession[]
+  reviews     KycReview[]
+}
+
+model VerificationSession {
+  id          String   @id @default(cuid())
+  kycId       String
+  kyc         KycProfile @relation(fields: [kycId], references: [id])
+  provider    String
+  status      String
+  createdAt   DateTime @default(now())
+  checks      VerificationCheck[]
+}
+
+model VerificationCheck {
+  id          String   @id @default(cuid())
+  sessionId   String
+  session     VerificationSession @relation(fields: [sessionId], references: [id])
+  category    String
+  result      String
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model KycReview {
+  id          String   @id @default(cuid())
+  kycId       String
+  kyc         KycProfile @relation(fields: [kycId], references: [id])
+  reviewerId  String?
+  decision    String
+  notes       String?
+  createdAt   DateTime @default(now())
+}
+
+model AmlAlert {
+  id          String   @id @default(cuid())
+  userId      String?
+  ruleId      String?
+  severity    String
+  status      String
+  title       String
+  details     String
+  createdAt   DateTime @default(now())
+  case        AmlCase?
+}
+
+model AmlCase {
+  id          String   @id @default(cuid())
+  alertId     String   @unique
+  alert       AmlAlert @relation(fields: [alertId], references: [id])
+  status      String
+  riskLevel   String
+  ownerId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  notes       CaseNote[]
+  decisions   CaseDecision[]
+}
+
+model CaseNote {
+  id        String   @id @default(cuid())
+  caseId    String
+  case      AmlCase  @relation(fields: [caseId], references: [id])
+  authorId  String?
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model CaseDecision {
+  id        String   @id @default(cuid())
+  caseId    String
+  case      AmlCase  @relation(fields: [caseId], references: [id])
+  decision  String
+  actorId   String?
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model MonitoringRule {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  type        String
+  description String
+  enabled     Boolean  @default(true)
+  paramsJson  String   @default("{}")
+}
+
+model LedgerAccount {
+  id             String   @id @default(cuid())
+  accountId      String?
+  account        Account? @relation(fields: [accountId], references: [id])
+  code           String   @unique
+  name           String
+  type           String
+  currency       String
+  ownerType      String
+  ownerId        String?
+  classification String
+  createdAt      DateTime @default(now())
+  entries        LedgerEntry[]
+}
+
+model LedgerTransaction {
+  id              String   @id @default(cuid())
+  idempotencyKey  String   @unique
+  type            String
+  status          String
+  description     String
+  source          String?
+  destination     String?
+  metadata        String   @default("{}")
+  createdAt       DateTime @default(now())
+  entries         LedgerEntry[]
+}
+
+model LedgerEntry {
+  id              String   @id @default(cuid())
+  transactionId   String
+  transaction     LedgerTransaction @relation(fields: [transactionId], references: [id])
+  ledgerAccountId String
+  ledgerAccount   LedgerAccount     @relation(fields: [ledgerAccountId], references: [id])
+  direction       String
+  amount          String
+  currency        String
+  createdAt       DateTime @default(now())
+}
+
+model AuditEvent {
+  id          String   @id @default(cuid())
+  actorId     String?
+  actor       User?    @relation("AuditActor", fields: [actorId], references: [id])
+  action      String
+  entity      String
+  entityId    String?
+  requestId   String?
+  ip          String?
+  device      String?
+  result      String
+  metadata    String   @default("{}")
+  createdAt   DateTime @default(now())
+
+  @@index([action, createdAt])
+  @@index([entity, entityId])
+}
+
+model DomainEvent {
+  id          String   @id @default(cuid())
+  type        String
+  payload     String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  processedAt DateTime?
+}
+
+model WebhookEvent {
+  id            String   @id @default(cuid())
+  provider      String
+  eventId       String
+  eventType     String
+  signature     String?
+  payload       String
+  status        String   @default("received")
+  retryCount    Int      @default(0)
+  receivedAt    DateTime @default(now())
+  processedAt   DateTime?
+  idempotencyKey String  @unique
+}
+
+model ReconciliationItem {
+  id            String   @id @default(cuid())
+  sourceA       String
+  sourceB       String
+  amountA       String
+  amountB       String
+  currency      String
+  difference    String
+  status        String
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Incident {
+  id          String   @id @default(cuid())
+  title       String
+  severity    String
+  status      String
+  owner       String?
+  summary     String
+  rootCause   String?
+  resolution  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  events      IncidentEvent[]
+  actions     IncidentAction[]
+}
+
+model IncidentEvent {
+  id          String   @id @default(cuid())
+  incidentId  String
+  incident    Incident @relation(fields: [incidentId], references: [id])
+  body        String
+  createdAt   DateTime @default(now())
+}
+
+model IncidentAction {
+  id          String   @id @default(cuid())
+  incidentId  String
+  incident    Incident @relation(fields: [incidentId], references: [id])
+  body        String
+  owner       String?
+  createdAt   DateTime @default(now())
+}
+
+model Complaint {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  category    String
+  status      String
+  priority    String
+  slaDueAt    DateTime?
+  owner       String?
+  summary     String
+  resolution  String?
+  createdAt   DateTime @default(now())
+  messages    ComplaintMessage[]
+}
+
+model ComplaintMessage {
+  id          String    @id @default(cuid())
+  complaintId String
+  complaint   Complaint @relation(fields: [complaintId], references: [id])
+  author      String
+  body        String
+  createdAt   DateTime  @default(now())
+}
+
+model Document {
+  id            String   @id @default(cuid())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id])
+  accountId     String?
+  account       Account? @relation(fields: [accountId], references: [id])
+  type          String
+  title         String
+  status        String   @default("available")
+  storageKey    String?
+  classification String  @default("confidential")
+  createdAt     DateTime @default(now())
+}
+
+model FeeSchedule {
+  id          String    @id @default(cuid())
+  name        String
+  marketId    String?
+  active      Boolean   @default(true)
+  rules       FeeRule[]
+}
+
+model FeeRule {
+  id            String      @id @default(cuid())
+  scheduleId    String
+  schedule      FeeSchedule @relation(fields: [scheduleId], references: [id])
+  code          String
+  name          String
+  type          String
+  bps           String?
+  flatAmount    String?
+  currency      String?
+  minAmount     String?
+  appliesTo     String
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  status      String
+  description String
+  marketsJson String   @default("[]")
+  updatedAt   DateTime @updatedAt
+}
+
+model Partner {
+  id                String   @id @default(cuid())
+  company           String
+  category          String
+  market            String
+  status            String
+  notes             String?
+  dueDiligenceState String   @default("not_started")
+  integrationState  String   @default("not_started")
+  createdAt         DateTime @default(now())
+  contacts          PartnerContact[]
+  integrations      PartnerIntegration[]
+}
+
+model PartnerContact {
+  id         String  @id @default(cuid())
+  partnerId  String
+  partner    Partner @relation(fields: [partnerId], references: [id])
+  name       String
+  role       String
+  email      String?
+}
+
+model PartnerIntegration {
+  id         String  @id @default(cuid())
+  partnerId  String
+  partner    Partner @relation(fields: [partnerId], references: [id])
+  capability String
+  state      String
+}
+
+model RegulatoryStage {
+  id            String   @id
+  name          String
+  description   String
+  owner         String
+  status        String
+  targetDate    DateTime?
+  completedAt   DateTime?
+  notes         String?
+  sortOrder     Int
+  requirements  RegulatoryRequirement[]
+}
+
+model RegulatoryRequirement {
+  id            String   @id @default(cuid())
+  stageId       String?
+  stage         RegulatoryStage? @relation(fields: [stageId], references: [id])
+  jurisdiction  String
+  institution   String
+  requirement   String
+  category      String
+  status        String
+  owner         String
+  dueDate       DateTime?
+  mandatory     Boolean  @default(true)
+  notes         String?
+  evidence      RegulatoryEvidence[]
+}
+
+model RegulatoryEvidence {
+  id              String   @id @default(cuid())
+  requirementId   String?
+  requirement     RegulatoryRequirement? @relation(fields: [requirementId], references: [id])
+  title           String
+  type            String
+  status          String
+  owner           String
+  expiryDate      DateTime?
+  notes           String?
+  createdAt       DateTime @default(now())
+}
+
+model ApprovalRequest {
+  id            String      @id @default(cuid())
+  type          String
+  status        String
+  entity        String
+  entityId      String
+  makerId       String?
+  checkerId     String?
+  notes         String?
+  withdrawalId  String?
+  withdrawal    Withdrawal? @relation(fields: [withdrawalId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model WaitlistEntry {
+  id                   String   @id @default(cuid())
+  userId               String?
+  user                 User?    @relation(fields: [userId], references: [id])
+  email                String
+  country              String
+  countryOfResidence   String
+  investorType         String
+  marketsInterested    String
+  createdAt            DateTime @default(now())
+}
+
+model EducationArticle {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  category    String
+  readMinutes Int
+  body        String
+  createdAt   DateTime @default(now())
+  progress    EducationProgress[]
+  saves       SavedArticle[]
+}
+
+model EducationProgress {
+  id         String           @id @default(cuid())
+  userId     String
+  user       User             @relation(fields: [userId], references: [id])
+  articleId  String
+  article    EducationArticle @relation(fields: [articleId], references: [id])
+  completed  Boolean          @default(false)
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([userId, articleId])
+}
+
+model SavedArticle {
+  id         String           @id @default(cuid())
+  userId     String
+  user       User             @relation(fields: [userId], references: [id])
+  articleId  String
+  article    EducationArticle @relation(fields: [articleId], references: [id])
+  createdAt  DateTime         @default(now())
+
+  @@unique([userId, articleId])
+}
+
+model SupportTicket {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  subject     String
+  category    String
+  status      String
+  body        String
+  createdAt   DateTime @default(now())
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  plan      String
+  status    String
+  createdAt DateTime @default(now())
+}
+
+model AnalyticsEvent {
+  id          String   @id @default(cuid())
+  name        String
+  userId      String?
+  properties  String   @default("{}")
+  createdAt   DateTime @default(now())
+}
+
+model Consent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  purpose   String
+  granted   Boolean
+  createdAt DateTime @default(now())
+}
+
+model PrivacyPreference {
+  id             String  @id @default(cuid())
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id])
+  marketingEmail Boolean @default(false)
+  productEmail   Boolean @default(true)
+  sms            Boolean @default(false)
+  push           Boolean @default(true)
+}
+
+model DataSubjectRequest {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String
+  status    String
+  createdAt DateTime @default(now())
+}
+
+model TaxResidence {
+  id           String     @id @default(cuid())
+  taxProfileId String
+  taxProfile   TaxProfile @relation(fields: [taxProfileId], references: [id])
+  country      String
+  primary      Boolean    @default(true)
+}
+
+model TaxEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  year      Int
+  type      String
+  amount    String
+  currency  String
+  createdAt DateTime @default(now())
+}
+
+model CorporateAction {
+  id          String   @id @default(cuid())
+  assetId     String
+  type        String
+  status      String
+  description String
+  effectiveAt DateTime
+}
+
+model RevenueEvent {
+  id          String   @id @default(cuid())
+  stream      String
+  amount      String
+  currency    String
+  sourceId    String?
+  createdAt   DateTime @default(now())
+}

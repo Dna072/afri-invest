@@ -1,0 +1,4 @@
+{
+  "install": "npm ci\ntest -f .env || cp .env.example .env\nnpx prisma generate\nnpx prisma db push --skip-generate --accept-data-loss\nnpm run seed",
+  "start": "npm run dev"
+}
