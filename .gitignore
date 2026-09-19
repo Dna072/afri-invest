@@ -49,3 +49,12 @@ next-env.d.ts
 *.db-journal
 /prisma/dev.db
 /prisma/*.db
+
+# terraform
+infra/gcp/.terraform/
+infra/gcp/.terraform.lock.hcl
+infra/gcp/*.tfstate
+infra/gcp/*.tfstate.*
+infra/gcp/terraform.tfvars
+infra/gcp/crash.log
+

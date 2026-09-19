@@ -26,8 +26,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
+  outputFileTracingIncludes: {
+    "/": ["./node_modules/.prisma/**/*", "./node_modules/@prisma/client/**/*"],
+  },
+  serverExternalPackages: ["@prisma/client"],
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

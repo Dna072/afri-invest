@@ -18,6 +18,7 @@ const schema = z.object({
   ENABLE_DEMO_CONTROLS: z.string().default("true"),
   ENABLE_DEMO_LOGIN: z.string().default("true"),
   LOG_LEVEL: z.string().default("info"),
+  GCS_BUCKET: z.string().optional(),
 });
 
 export const env = schema.parse({
@@ -38,6 +39,7 @@ export const env = schema.parse({
   ENABLE_DEMO_CONTROLS: process.env.ENABLE_DEMO_CONTROLS,
   ENABLE_DEMO_LOGIN: process.env.ENABLE_DEMO_LOGIN,
   LOG_LEVEL: process.env.LOG_LEVEL,
+  GCS_BUCKET: process.env.GCS_BUCKET,
 });
 
 export function isProduction() {

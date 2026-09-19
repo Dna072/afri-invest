@@ -6,15 +6,17 @@ Customer accounts, portfolio, ledger, order domain, fee engine, KYC/AML, reconci
 
 ## Database
 
-Local SQLite (`file:./dev.db`) → managed PostgreSQL. Prisma schema is written to be portable (string money, string enums). Run `prisma migrate` against PostgreSQL; do not hand-edit production schema.
+Local SQLite (`file:./dev.db`) → managed PostgreSQL on **Cloud SQL**. Prisma schema is written to be portable (string money, string enums). Docker/Cloud Build switches the Prisma provider to `postgresql` at image build time. First deploys use `prisma db push` via a Cloud Run Job; do not hand-edit production schema. Move to `prisma migrate` before live money.
 
 ## Secrets
 
-Move `SESSION_SECRET` and future provider keys to a secrets manager. Never bake them into images.
+`SESSION_SECRET` and `DATABASE_URL` live in **Secret Manager**. Never bake them into images.
 
-## Infra later, not now
+## Infra
 
-AWS, CDN, WAF, queues, object storage, workers, multi-region — boundaries exist (webhooks, domain events, document storage keys). Do not build them in MVP.
+GCP is the deploy target: Cloud Run + Cloud SQL + Cloud Storage. See `docs/gcp-deployment.md`. Do not add GKE, a global HTTPS load balancer, or a Serverless VPC connector unless there is a concrete need — those recreate idle cost.
+
+AWS, extra CDNs, WAF, queues, and workers remain future options. Boundaries exist (webhooks, domain events, document storage keys).
 
 ## Business continuity
 

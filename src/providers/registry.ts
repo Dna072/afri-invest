@@ -10,6 +10,7 @@ import type {
   PaymentProvider,
   TaxProvider,
 } from "@/providers/types";
+import { GcsDocumentProvider } from "@/providers/gcp/documents";
 import { MockBrokerProvider } from "@/providers/mock/broker";
 import { MockCustodyProvider } from "@/providers/mock/custody";
 import { MockDocumentProvider } from "@/providers/mock/documents";
@@ -25,6 +26,11 @@ function resolve<T>(name: string, mock: () => T): T {
   return mock();
 }
 
+function resolveDocuments(): DocumentProvider {
+  if (env.DOCUMENT_PROVIDER === "gcs") return new GcsDocumentProvider();
+  return new MockDocumentProvider();
+}
+
 export function getProviders() {
   return {
     identity: resolve(env.IDENTITY_PROVIDER, () => new MockIdentityProvider()) as IdentityProvider,
@@ -34,7 +40,7 @@ export function getProviders() {
     custody: resolve(env.CUSTODY_PROVIDER, () => new MockCustodyProvider()) as CustodyProvider,
     marketData: resolve(env.MARKET_DATA_PROVIDER, () => new MockMarketDataProvider()) as MarketDataProvider,
     notifications: resolve(env.NOTIFICATION_PROVIDER, () => new MockNotificationProvider()) as NotificationProvider,
-    documents: resolve(env.DOCUMENT_PROVIDER, () => new MockDocumentProvider()) as DocumentProvider,
+    documents: resolveDocuments(),
     tax: resolve(env.TAX_PROVIDER, () => new MockTaxProvider()) as TaxProvider,
   };
 }

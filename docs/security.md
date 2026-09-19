@@ -3,7 +3,7 @@
 - Authentication: bcrypt passwords, JWT in httpOnly cookies, 7-day expiry
 - Authorization: `src/lib/rbac.ts` permissions independent of roles; API routes call `requireUser` + `can`
 - Headers: frame deny, nosniff, referrer, permissions-policy, CSP
-- Secrets: `.env.example` only; never commit `.env`
+- Secrets: `.env.example` only; never commit `.env`. GCP uses Secret Manager for `DATABASE_URL` and `SESSION_SECRET`.
 - Audit: `AuditEvent` for login, payments, FX, orders, KYC, AML, admin
 - Demo controls: `ENABLE_DEMO_CONTROLS` and never in `APP_ENV=production`
 - Data classification fields on users/documents

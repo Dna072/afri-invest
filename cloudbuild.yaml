@@ -1,0 +1,121 @@
+# Serverless CI/CD for Africa Invest on GCP.
+# Invoked by scripts/deploy-gcp.sh. Builds two images: the Cloud Run web
+# service (scale-to-zero) and a one-shot migrate job.
+timeout: 2400s
+
+substitutions:
+  _REGION: europe-west1
+  _AR_REPO: africa-invest
+  _SERVICE: africa-invest
+  _ENV: sandbox
+  _SEED: "true"
+  _CPU: "1"
+  _MEMORY: 1Gi
+  _MAX_INSTANCES: "4"
+  _SQL_CONNECTION: ""
+  _RUN_SA: ""
+  _MIGRATE_SA: ""
+  _DB_SECRET: africa-invest-database-url
+  _SESSION_SECRET: africa-invest-session-secret
+  _GCS_BUCKET: ""
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:${SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:latest
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}-migrate:${SHORT_SHA}
+
+steps:
+  - id: build-web
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --target
+      - runner
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:${SHORT_SHA}
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:latest
+      - .
+
+  - id: build-migrate
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - --target
+      - migrate
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}-migrate:${SHORT_SHA}
+      - .
+
+  - id: push-images
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:${SHORT_SHA}
+        docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:latest
+        docker push ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}-migrate:${SHORT_SHA}
+
+  - id: migrate-job
+    name: gcr.io/google.com/cloudsdktool/google-cloud-cli:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        gcloud run jobs deploy ${_SERVICE}-migrate \
+          --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}-migrate:${SHORT_SHA} \
+          --region=${_REGION} \
+          --service-account=${_MIGRATE_SA} \
+          --set-cloudsql-instances=${_SQL_CONNECTION} \
+          --set-secrets=DATABASE_URL=${_DB_SECRET}:latest \
+          --set-env-vars=GCP_RUN_SEED=${_SEED},APP_ENV=${_ENV},NODE_ENV=production \
+          --cpu=1 \
+          --memory=1Gi \
+          --task-timeout=15m \
+          --max-retries=0 \
+          --quiet
+        gcloud run jobs execute ${_SERVICE}-migrate --region=${_REGION} --wait --quiet
+
+  - id: deploy-web
+    name: gcr.io/google.com/cloudsdktool/google-cloud-cli:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        DEMO_CONTROLS=true
+        DEMO_LOGIN=true
+        if [ "${_ENV}" = "production" ]; then
+          DEMO_CONTROLS=false
+          DEMO_LOGIN=false
+        fi
+        gcloud run deploy ${_SERVICE} \
+          --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/${_SERVICE}:${SHORT_SHA} \
+          --region=${_REGION} \
+          --service-account=${_RUN_SA} \
+          --ingress=all \
+          --allow-unauthenticated \
+          --min-instances=0 \
+          --max-instances=${_MAX_INSTANCES} \
+          --cpu=${_CPU} \
+          --memory=${_MEMORY} \
+          --concurrency=80 \
+          --timeout=60 \
+          --cpu-boost \
+          --execution-environment=gen2 \
+          --port=8080 \
+          --add-cloudsql-instances=${_SQL_CONNECTION} \
+          --set-secrets=DATABASE_URL=${_DB_SECRET}:latest,SESSION_SECRET=${_SESSION_SECRET}:latest \
+          --set-env-vars=APP_ENV=${_ENV},NODE_ENV=production,DOCUMENT_PROVIDER=gcs,GCS_BUCKET=${_GCS_BUCKET},ENABLE_DEMO_CONTROLS=$${DEMO_CONTROLS},ENABLE_DEMO_LOGIN=$${DEMO_LOGIN},IDENTITY_PROVIDER=mock,PAYMENT_PROVIDER=mock,FX_PROVIDER=mock,BROKER_PROVIDER=mock,CUSTODY_PROVIDER=mock,MARKET_DATA_PROVIDER=mock,NOTIFICATION_PROVIDER=mock,TAX_PROVIDER=mock \
+          --startup-probe=httpGetPath=/api/health,initialDelaySeconds=5,timeoutSeconds=3,periodSeconds=10,failureThreshold=12 \
+          --liveness-probe=httpGetPath=/api/health,periodSeconds=30,timeoutSeconds=3,failureThreshold=3 \
+          --quiet
+        URL=$$(gcloud run services describe ${_SERVICE} --region=${_REGION} --format='value(status.url)')
+        gcloud run services update ${_SERVICE} --region=${_REGION} --update-env-vars=APP_URL=$${URL} --quiet
+        echo "Deployed $${URL}"

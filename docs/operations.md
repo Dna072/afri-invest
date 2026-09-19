@@ -1,6 +1,7 @@
 # Operations
 
 - Structured JSON logs (`src/lib/logger.ts`) with request IDs on API errors
+- GCP: Cloud Run + Cloud SQL. Overnight SQL pause on sandbox/staging. See `docs/gcp-deployment.md`.
 - Audit timeline in admin
 - Reconciliation exceptions with investigate/resolve/escalate statuses
 - Incident + complaint modules with SLA fields

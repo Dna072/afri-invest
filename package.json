@@ -16,6 +16,7 @@
     "reset-demo": "tsx prisma/reset-demo.ts",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
+    "deploy:gcp": "bash scripts/deploy-gcp.sh all",
     "postinstall": "prisma generate"
   },
   "prisma": {

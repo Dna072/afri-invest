@@ -1,0 +1,18 @@
+project_id  = "YOUR_GCP_PROJECT_ID"
+region      = "europe-west1"
+environment = "sandbox"
+
+# Cheapest Cloud SQL PostgreSQL shared-core. If apply fails on tier, set db-g1-small.
+sql_tier = "db-f1-micro"
+
+# Cloud Run caps. min instances is always 0 (set in the deploy script).
+max_instances = 4
+cpu           = "1"
+memory        = "1Gi"
+
+# Pause Cloud SQL overnight in sandbox/staging. Forced off when environment=production.
+enable_idle_sql_schedule = true
+
+# Optional: billing account id (XXXXXX-XXXXXX-XXXXXX) creates a $25/month alert.
+# billing_account_id = ""
+# monthly_budget_usd = 25

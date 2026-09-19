@@ -1,0 +1,13 @@
+.git
+.github
+.next
+node_modules
+coverage
+playwright-report
+test-results
+infra/gcp/.terraform
+infra/gcp/*.tfstate*
+*.db
+.env
+.env.*
+.cursor
