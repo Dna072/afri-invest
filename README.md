@@ -110,11 +110,23 @@ npm run build
 
 ## Deployment
 
-The app is a single Next.js deployable. Point `DATABASE_URL` at PostgreSQL in staging/production, set `APP_ENV`, rotate `SESSION_SECRET`, keep providers on `mock` until sandbox contracts exist. See `docs/production-migration.md`.
+The app is a single Next.js deployable.
+
+**Local / Cursor Cloud:** SQLite via `.env.example`.
+
+**GCP (lean, scales with traffic):** Cloud Run (scale to zero) + Cloud SQL PostgreSQL + Secret Manager + Cloud Storage.
+
+```bash
+gcloud config set project YOUR_PROJECT_ID
+export GCP_PROJECT_ID=YOUR_PROJECT_ID
+./scripts/deploy-gcp.sh
+```
+
+See `docs/gcp-deployment.md` for architecture, cost floor, pause/resume, and production flags. Point `DATABASE_URL` at PostgreSQL in staging/production, rotate `SESSION_SECRET`, keep providers on `mock` until sandbox contracts exist. See `docs/production-migration.md`.
 
 ## Known limitations
 
-- SQLite locally instead of managed PostgreSQL
+- SQLite locally instead of managed PostgreSQL (Cloud SQL is the GCP production target; see `docs/gcp-deployment.md`)
 - Mock providers only
 - Sandbox market data, not live quotes
 - No live KYC/AML vendors

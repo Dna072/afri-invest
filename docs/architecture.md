@@ -27,6 +27,8 @@ UI (App Router)
 
 Providers are selected with `*_PROVIDER=mock` (default). Domain code never imports a concrete PSP.
 
+GCP runtime (see `docs/gcp-deployment.md`): **Cloud Run** for the monolith (min instances 0), **Cloud SQL PostgreSQL** for the ledger, **Secret Manager** for `DATABASE_URL` / `SESSION_SECRET`, **Cloud Storage** when `DOCUMENT_PROVIDER=gcs`. No microservices and no always-on app servers.
+
 ## Why not microservices
 
 There is no scale, team or regulatory perimeter that yet justifies splitting Identity, Payments, FX, Trading, Ledger or Compliance. Boundaries are already drawn so those slices can be extracted later.

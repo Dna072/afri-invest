@@ -9,7 +9,7 @@
 | Custody | MockCustodyProvider | Custodian sandbox | Licensed custodian | Positions remain first-class |
 | Market data | Seeded sandbox | Vendor sandbox | Live vendor | Assets marked sandbox |
 | Notifications | Mock in-app | Email sandbox | Email/push/SMS | Channels on Notification |
-| Documents | Metadata stub | Object storage sandbox | Encrypted object store | Classification field |
+| Documents | Metadata stub / **GCS on Cloud Run** | Object storage sandbox | Encrypted object store | Classification field |
 | Tax | Withholding estimate stub | Vendor | Vendor | Not full international tax |
 | Global broker | Interface only | Sandbox | Production | Future US/EU/ETFs |
 

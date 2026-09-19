@@ -53,7 +53,7 @@ export async function createSession(user: { id: string; role: string }, meta?: {
   jar.set(COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: env.APP_ENV === "production",
+    secure: env.APP_ENV === "production" || env.APP_URL.startsWith("https://"),
     path: "/",
     expires: expiresAt,
   });
