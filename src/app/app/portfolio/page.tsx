@@ -13,7 +13,7 @@ export default async function PortfolioPage() {
   return (
     <AppShell title="Portfolio">
       <div className="rounded-[2rem] bg-card p-6">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Total value</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Ghana portfolio</p>
         <MoneyText amount={portfolio.summary.total.toFixed()} currency="GHS" size="xl" />
         <div className="mt-2 flex gap-4 text-sm">
           <span>Invested <MoneyText amount={portfolio.summary.invested.toFixed()} currency="GHS" /></span>

@@ -54,11 +54,14 @@ export function summarisePortfolio(
     Money.zero(reporting),
   );
   const holdingsValue = holdings.reduce((acc, h) => acc.add(h.reportingValue), Money.zero(reporting));
+  const reportingCash = cash
+    .filter((c) => c.currency === reporting)
+    .reduce((acc, c) => acc.add(Money.from(c.amount, reporting)), Money.zero(reporting));
   const cashValue = cash.reduce(
     (acc, c) => acc.add(fxToReporting(Money.from(c.amount, c.currency))),
     Money.zero(reporting),
   );
-  const total = holdingsValue.add(cashValue);
+  const total = holdingsValue.add(reportingCash);
   const pnl = holdingsValue.sub(invested);
   const returnPercent = invested.isZero() ? new Decimal(0) : pnl.amount.div(invested.amount).times(100);
 
@@ -66,6 +69,7 @@ export function summarisePortfolio(
     total,
     invested,
     cashValue,
+    reportingCash,
     holdingsValue,
     pnl,
     returnPercent: returnPercent.toFixed(2),
