@@ -70,5 +70,14 @@
     "tsx": "^4.20.5",
     "typescript": "^5",
     "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "overrides": {
+    "next": "15.5.25",
+    "eslint-config-next": "15.5.25",
+    "postcss": "8.5.28",
+    "deepmerge-ts": "8.0.2"
   }
 }

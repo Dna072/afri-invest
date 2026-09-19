@@ -72,15 +72,25 @@ All personal data is fictional.
 
 ## How to run
 
+Use Node 22 (`nvm use` if you have nvm). Do **not** run `npm audit fix --force` — it rewrites Next/Prisma/Vitest across major versions and can leave `package.json` empty.
+
 ```bash
 cp .env.example .env
-npm install
+npm ci
 npx prisma db push
 npm run seed
 npm run dev
 ```
 
 Open http://localhost:3000
+
+If `npm ci` / `npm install` fails with `EJSONPARSE` / empty `package.json` (usually after `npm audit fix --force`):
+
+```bash
+git checkout -- package.json package-lock.json
+rm -rf node_modules
+npm ci
+```
 
 ### Cursor Cloud environment
 
