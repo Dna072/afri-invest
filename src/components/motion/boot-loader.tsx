@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AfricaLogoMark, BrandWordmark } from "@/components/brand/logo-mark";
-import { BOOT_STAGES, BRAND_TAGLINE, bootProgressAt, bootStageAt, type BootStageId } from "@/data/boot";
+import { BOOT_STAGES, BRAND_TAGLINE, bootProgressAt, bootStageAt, elapsedForStage, type BootStageId } from "@/data/boot";
 
 const BOOT_KEY = "ai-booted";
 const BOOT_MS = 4000;
@@ -14,7 +14,13 @@ export function BootLoader() {
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
-    const force = new URLSearchParams(window.location.search).has("boot");
+    const params = new URLSearchParams(window.location.search);
+    const force = params.has("boot");
+    const freeze = Number(params.get("stage"));
+    if (freeze >= 1 && freeze <= 4) {
+      setElapsed(elapsedForStage(freeze, BOOT_MS));
+      return;
+    }
     if (!force && (window.sessionStorage.getItem(BOOT_KEY) || navigator.webdriver)) {
       setVisible(false);
       return;

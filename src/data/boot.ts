@@ -45,3 +45,9 @@ export function bootProgressAt(ms: number, totalMs: number) {
   const t = Math.min(1, Math.max(0, ms / totalMs));
   return Math.round(8 + t * 90);
 }
+
+/** Elapsed ms that holds a boot stage still, used by `?stage=1..4`. */
+export function elapsedForStage(stage: number, totalMs: number) {
+  if (stage < 1 || stage > 4) return 0;
+  return ((stage - 0.2) / 4) * totalMs;
+}

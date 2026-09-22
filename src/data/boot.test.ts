@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BOOT_STAGES, bootProgressAt, bootStageAt } from "./boot";
+import { BOOT_STAGES, bootProgressAt, bootStageAt, elapsedForStage } from "./boot";
 
 describe("boot stages", () => {
   it("walks the four logo shots", () => {
@@ -9,5 +9,12 @@ describe("boot stages", () => {
     expect(bootStageAt(2800, 4000).label).toMatch(/opportunit/i);
     expect(bootStageAt(3900, 4000).label).toMatch(/almost/i);
     expect(bootProgressAt(4000, 4000)).toBeGreaterThanOrEqual(95);
+  });
+
+  it("freezes each logo shot for ?stage=", () => {
+    expect(bootStageAt(elapsedForStage(1, 4000), 4000).id).toBe(1);
+    expect(bootStageAt(elapsedForStage(2, 4000), 4000).id).toBe(2);
+    expect(bootStageAt(elapsedForStage(3, 4000), 4000).id).toBe(3);
+    expect(bootStageAt(elapsedForStage(4, 4000), 4000).id).toBe(4);
   });
 });
