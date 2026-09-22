@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-:root {
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root,
+[data-palette="forest"] {
   --background: #f4f1ea;
   --foreground: #12241c;
   --card: #fffcf6;
@@ -22,16 +25,18 @@
   --ring: #12382c;
   --input: #ddd4c2;
   --navy-card: #0d241c;
+  --ticker: #eef3ee;
   --ghana-green: #006b3f;
   --ghana-gold: #fcd116;
   --ghana-red: #ce1126;
-  --radius: 0.75rem;
+  --radius: 0.5rem;
   --shadow: 0 2px 8px rgba(18, 36, 28, 0.06);
   --shadow-hover: 0 10px 28px rgba(18, 36, 28, 0.12);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dark {
+.dark,
+.dark[data-palette="forest"] {
   --background: #0b1410;
   --foreground: #f3ede0;
   --card: #141c18;
@@ -48,6 +53,169 @@
   --ring: #d7b36a;
   --input: #2a3831;
   --navy-card: #0a1a14;
+  --ticker: #101a16;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+[data-palette="ocean"] {
+  --background: #eef3f4;
+  --foreground: #102226;
+  --card: #f7fbfb;
+  --card-foreground: #102226;
+  --muted: #dce8ea;
+  --muted-foreground: #4d6468;
+  --primary: #1a5560;
+  --primary-foreground: #f4fbfb;
+  --secondary: #d5e4c8;
+  --secondary-foreground: #1a5560;
+  --accent: #c9a24a;
+  --accent-foreground: #1a2a22;
+  --border: #c9d6d8;
+  --ring: #1a5560;
+  --input: #c9d6d8;
+  --navy-card: #0d2a30;
+  --ticker: #e4eef0;
+}
+
+.dark[data-palette="ocean"] {
+  --background: #071316;
+  --foreground: #e8f1f2;
+  --card: #0f1c20;
+  --card-foreground: #e8f1f2;
+  --muted: #162428;
+  --muted-foreground: #9bb4b8;
+  --primary: #7ec8d1;
+  --primary-foreground: #082022;
+  --secondary: #1a2e32;
+  --secondary-foreground: #e8f1f2;
+  --accent: #d7b36a;
+  --accent-foreground: #12241c;
+  --border: #24383c;
+  --ring: #7ec8d1;
+  --input: #24383c;
+  --navy-card: #06181c;
+  --ticker: #0a1619;
+}
+
+[data-palette="sahel"] {
+  --background: #f6efe6;
+  --foreground: #2a1610;
+  --card: #fff8f1;
+  --card-foreground: #2a1610;
+  --muted: #eadccf;
+  --muted-foreground: #6d564c;
+  --primary: #8b3e2f;
+  --primary-foreground: #fff6ef;
+  --secondary: #ead3a8;
+  --secondary-foreground: #8b3e2f;
+  --accent: #d4a04a;
+  --accent-foreground: #2a1610;
+  --border: #e0cfc0;
+  --ring: #8b3e2f;
+  --input: #e0cfc0;
+  --navy-card: #2a1510;
+  --ticker: #f0e6db;
+}
+
+.dark[data-palette="sahel"] {
+  --background: #140e0c;
+  --foreground: #f3e6d8;
+  --card: #1d1512;
+  --card-foreground: #f3e6d8;
+  --muted: #2a201c;
+  --muted-foreground: #c2ada0;
+  --primary: #e09a6c;
+  --primary-foreground: #1a100c;
+  --secondary: #2e221c;
+  --secondary-foreground: #f3e6d8;
+  --accent: #d7b36a;
+  --accent-foreground: #1a100c;
+  --border: #3a2c26;
+  --ring: #e09a6c;
+  --input: #3a2c26;
+  --navy-card: #1a100c;
+  --ticker: #181210;
+}
+
+[data-palette="gold"] {
+  --background: #f8f4e8;
+  --foreground: #1c1810;
+  --card: #fffdf6;
+  --card-foreground: #1c1810;
+  --muted: #ebe3cc;
+  --muted-foreground: #6a624c;
+  --primary: #4a3c1c;
+  --primary-foreground: #f8f1d8;
+  --secondary: #e8d59a;
+  --secondary-foreground: #4a3c1c;
+  --accent: #c9a24a;
+  --accent-foreground: #1c1810;
+  --border: #ddd4b8;
+  --ring: #4a3c1c;
+  --input: #ddd4b8;
+  --navy-card: #1c1810;
+  --ticker: #f1ead4;
+}
+
+.dark[data-palette="gold"] {
+  --background: #100e08;
+  --foreground: #f5edd4;
+  --card: #18150c;
+  --card-foreground: #f5edd4;
+  --muted: #242014;
+  --muted-foreground: #c2b48a;
+  --primary: #e0c070;
+  --primary-foreground: #1c1810;
+  --secondary: #2a2416;
+  --secondary-foreground: #f5edd4;
+  --accent: #e0c070;
+  --accent-foreground: #1c1810;
+  --border: #3a3220;
+  --ring: #e0c070;
+  --input: #3a3220;
+  --navy-card: #16120a;
+  --ticker: #14110a;
+}
+
+[data-palette="midnight"] {
+  --background: #f4f6fa;
+  --foreground: #121826;
+  --card: #ffffff;
+  --card-foreground: #121826;
+  --muted: #e6ebf3;
+  --muted-foreground: #5b6578;
+  --primary: #1a2744;
+  --primary-foreground: #f4f6fa;
+  --secondary: #dce4c8;
+  --secondary-foreground: #1a2744;
+  --accent: #c9a24a;
+  --accent-foreground: #1a2a22;
+  --border: #d7dde8;
+  --ring: #1a2744;
+  --input: #d7dde8;
+  --navy-card: #121a2e;
+  --ticker: #eef1f6;
+}
+
+.dark[data-palette="midnight"] {
+  --background: #0a0e18;
+  --foreground: #e8edf5;
+  --card: #121826;
+  --card-foreground: #e8edf5;
+  --muted: #1a2233;
+  --muted-foreground: #9aa6bc;
+  --primary: #d7b36a;
+  --primary-foreground: #121826;
+  --secondary: #1c2436;
+  --secondary-foreground: #e8edf5;
+  --accent: #d7b36a;
+  --accent-foreground: #121826;
+  --border: #2a3348;
+  --ring: #d7b36a;
+  --input: #2a3348;
+  --navy-card: #0c1220;
+  --ticker: #0c111c;
 }
 
 @theme inline {
@@ -75,10 +243,10 @@
   --font-sans: var(--font-jakarta);
   --font-display: var(--font-fraunces);
   --font-mono: var(--font-ibm);
-  --radius-sm: 0.5rem;
+  --radius-sm: 0.375rem;
   --radius-md: var(--radius);
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 }
 
 * {
@@ -94,6 +262,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   min-height: 100dvh;
+  transition: background-color 280ms var(--ease), color 280ms var(--ease);
 }
 
 .font-display {
@@ -106,12 +275,11 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Warm paper + faint Sankofa-like rings — Ghana without a flag dump */
 .paper {
   background:
-    radial-gradient(900px 380px at 8% -8%, rgba(201, 162, 74, 0.16), transparent 52%),
-    radial-gradient(720px 280px at 100% 0%, rgba(181, 82, 56, 0.06), transparent 42%),
-    radial-gradient(circle at 92% 88%, rgba(0, 107, 63, 0.05), transparent 28%),
+    radial-gradient(900px 380px at 8% -8%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 52%),
+    radial-gradient(720px 280px at 100% 0%, color-mix(in srgb, var(--ghana-red) 8%, transparent), transparent 42%),
+    radial-gradient(circle at 92% 88%, color-mix(in srgb, var(--ghana-green) 8%, transparent), transparent 28%),
     var(--background);
 }
 
@@ -139,7 +307,7 @@ body {
 .field {
   min-height: 3rem;
   width: 100%;
-  border-radius: 0.65rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--input);
   background: var(--card);
   padding: 0 1rem;
@@ -149,7 +317,7 @@ body {
 .field:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(18, 56, 44, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
 }
 
 .eyebrow {
@@ -177,7 +345,7 @@ body {
 }
 
 .faq-item {
-  border-radius: 0.85rem;
+  border-radius: 0.75rem;
   background: var(--card);
   padding: 1rem 1.15rem;
 }
@@ -196,6 +364,61 @@ body {
   margin-top: 0.65rem;
   font-size: 0.9rem;
   color: var(--muted-foreground);
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.btn-shine:hover::after {
+  transform: translateX(120%);
+  transition: transform 0.65s var(--ease);
+}
+
+.africa-ring {
+  animation: spin 1.8s linear infinite;
+}
+
+.africa-liquid {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: fill-africa 1.45s var(--ease) both;
+}
+
+.africa-trace {
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  animation: trace-africa 1.35s var(--ease) forwards;
+}
+
+.ghana-pulse {
+  animation: ghana-dot 1.6s ease-in-out infinite;
+}
+
+.ghana-progress {
+  background: linear-gradient(
+    90deg,
+    var(--ghana-green),
+    var(--ghana-gold),
+    var(--ghana-red),
+    var(--ghana-green)
+  );
+  background-size: 200% 100%;
+  transform: scaleX(0);
+}
+
+.ghana-progress-run {
+  animation: ghana-bar 0.72s var(--ease) forwards;
 }
 
 @keyframes ticker {
@@ -218,6 +441,48 @@ body {
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fill-africa {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes trace-africa {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ghana-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes ghana-bar {
+  from {
+    transform: scaleX(0.08);
+    background-position: 0% 0;
+  }
+  to {
+    transform: scaleX(1);
+    background-position: 100% 0;
+  }
+}
+
 .rise-in {
   animation: rise-in 0.7s var(--ease) both;
 }
@@ -231,14 +496,26 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .ticker-track {
+  .ticker-track,
+  .africa-ring,
+  .africa-liquid,
+  .africa-trace,
+  .ghana-pulse,
+  .ghana-progress-run,
+  .rise-in {
     animation: none;
+  }
+  .africa-trace {
+    stroke-dashoffset: 0;
+  }
+  .africa-liquid {
+    transform: none;
   }
   .lift:hover {
     transform: none;
   }
-  .rise-in {
-    animation: none;
+  .btn-shine:hover::after {
+    transform: none;
   }
   *,
   *::before,

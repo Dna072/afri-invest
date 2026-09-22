@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/chrome/app-shell";
+import { AppearancePanel } from "@/components/theme/appearance-panel";
 import { Button } from "@/components/ui/button";
 import { requireUser, clearSession } from "@/services/auth";
 import { prisma } from "@/lib/db";
@@ -13,6 +14,9 @@ export default async function ProfilePage() {
   });
   return (
     <AppShell title="Profile">
+      <div className="mb-6">
+        <AppearancePanel />
+      </div>
       <div className="space-y-3">
         {[
           ["Personal information", `${full.firstName} ${full.lastName}`],

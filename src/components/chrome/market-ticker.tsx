@@ -6,7 +6,7 @@ const tickers = ASSET_SEED.filter((a) => a.assetType === "equity").slice(0, 16);
 export function MarketTicker() {
   const loop = [...tickers, ...tickers];
   return (
-    <div className="relative border-b border-border bg-[#eef3ee]" aria-label="Sandbox market tape">
+    <div className="relative border-b border-border bg-[color:var(--ticker)]" aria-label="Sandbox market tape">
       <div className="ticker-wrap pr-28 sm:pr-44">
         <div className="ticker-track py-2">
           {loop.map((asset, i) => {
@@ -31,7 +31,7 @@ export function MarketTicker() {
           })}
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center bg-gradient-to-l from-[#eef3ee] via-[#eef3ee] to-transparent pl-8 pr-3">
+      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center bg-gradient-to-l from-[color:var(--ticker)] via-[color:var(--ticker)] to-transparent pl-8 pr-3">
         <AccraClock compact className="pointer-events-auto hidden sm:inline-flex" />
       </div>
     </div>

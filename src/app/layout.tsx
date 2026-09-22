@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Fraunces, IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { BootLoader } from "@/components/motion/boot-loader";
+import { RouteProgress } from "@/components/motion/route-progress";
+import { ThemeProvider } from "@/components/theme/provider";
+import { THEME_BOOT } from "@/lib/theme";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -41,8 +46,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${jakarta.variable} ${fraunces.variable} ${ibm.variable} antialiased paper`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${jakarta.variable} ${fraunces.variable} ${ibm.variable} antialiased paper`}>
+        <Script id="ai-theme" strategy="beforeInteractive">
+          {THEME_BOOT}
+        </Script>
+        <ThemeProvider>
+          <BootLoader />
+          <RouteProgress />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
