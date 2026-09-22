@@ -1,4 +1,4 @@
-/** Accra is GMT year-round. GSE hours are modelled, not a live feed. */
+/** GSE session clock. Africa/Accra is GMT year-round. Hours are modelled, not a live feed. */
 export type AccraClock = {
   weekday: string;
   hour: number;
@@ -36,6 +36,6 @@ export function getAccraClock(date = new Date()): AccraClock {
     time: `${parts.hour}:${parts.minute}`,
     isWeekday,
     insideHours,
-    label: insideHours ? "Inside Accra hours" : "Outside Accra hours",
+    label: insideHours ? "GSE open" : "GSE closed",
   };
 }

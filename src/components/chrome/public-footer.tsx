@@ -10,30 +10,30 @@ export function PublicFooter() {
         <div>
           <BrandMark />
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-            One account for Africans everywhere. Built in the Ghana corridor first. Sandbox market data. Not a live
-            brokerage.
+            One account for African stocks, ETFs and, next, global markets. Piloting in Ghana first. KYC required for
+            every investor.
           </p>
           <div className="mt-4">
             <AccraClock />
           </div>
           <Button asChild size="sm" className="mt-5">
-            <Link href="/signup">Open a sandbox account</Link>
+            <Link href="/signup">Start investing</Link>
           </Button>
         </div>
         <div className="text-sm">
           <p className="eyebrow">Product</p>
           <ul className="mt-3 grid gap-2">
             <li>
-              <Link href="/#markets">Markets</Link>
+              <Link href="/stocks">African stocks</Link>
             </li>
             <li>
               <Link href="/fees">Fees</Link>
             </li>
             <li>
-              <Link href="/investor-demo">Product tour</Link>
+              <Link href="/#how">How it works</Link>
             </li>
             <li>
-              <Link href="/waitlist">Waitlist</Link>
+              <Link href="/waitlist">Early access</Link>
             </li>
           </ul>
         </div>
@@ -54,8 +54,8 @@ export function PublicFooter() {
       </div>
       <div className="border-t border-border px-4 py-4 text-xs text-muted-foreground">
         <div className="mx-auto flex max-w-6xl flex-wrap gap-3">
-          <span>© Africa Invest. Under development.</span>
-          <span className="ml-auto">Illustrative sandbox prices · no licence claimed</span>
+          <span>© Africa Invest. Under development. Not a live brokerage.</span>
+          <span className="ml-auto">Illustrative prices · KYC required</span>
         </div>
       </div>
     </footer>

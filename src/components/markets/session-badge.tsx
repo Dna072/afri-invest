@@ -23,7 +23,7 @@ export function SessionBadge({ className }: { className?: string }) {
       <span
         className={cn("h-1.5 w-1.5 rounded-full", clock.insideHours ? "bg-[color:var(--ghana-green)]" : "bg-muted-foreground")}
       />
-      {clock.insideHours ? "Accra hours" : "After hours"} · 09:30–15:00 GMT
+      {clock.insideHours ? "GSE open" : "GSE closed"} · 09:30–15:00 GMT
     </span>
   );
 }

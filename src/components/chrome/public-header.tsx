@@ -11,10 +11,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { href: "/#markets", label: "Markets" },
+  { href: "/stocks", label: "Markets" },
   { href: "/#how", label: "How it works" },
   { href: "/fees", label: "Fees" },
-  { href: "/investor-demo", label: "Product tour" },
 ];
 
 export function PublicHeader() {
@@ -58,7 +57,7 @@ export function PublicHeader() {
           </Button>
           <Button asChild size="sm">
             <Link href="/signup">
-              Open account <span aria-hidden>→</span>
+              Start investing <span aria-hidden>→</span>
             </Link>
           </Button>
         </div>
@@ -80,7 +79,7 @@ export function PublicHeader() {
             <Link href="/login">Sign in</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href="/signup">Open account</Link>
+            <Link href="/signup">Start investing</Link>
           </Button>
         </div>
       </div>
@@ -103,7 +102,7 @@ export function PublicHeader() {
                 Sign in
               </Link>
               <Button asChild className="mt-1">
-                <Link href="/signup">Open account</Link>
+                <Link href="/signup">Start investing</Link>
               </Button>
               <AccraClock className="py-2" />
             </div>

@@ -42,6 +42,6 @@ export function quoteFx(input: {
     debitTotal: fees.grandTotal,
     expiresInSeconds: 60,
     items: fees.items,
-    disclaimer: "Illustrative sandbox FX. Not a live tradable rate.",
+    disclaimer: "Illustrative FX. Not a live tradable rate.",
   };
 }

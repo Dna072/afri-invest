@@ -1,76 +1,20 @@
 "use client";
 
-import { useId } from "react";
-import { AFRICA_PATH, MADAGASCAR_PATH } from "@/components/brand/africa-silhouette";
+import { AfricaLogoMark } from "@/components/brand/logo-mark";
 import { cn } from "@/lib/cn";
 
 export function AfricaSpinner({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
-  const uid = useId().replace(/:/g, "");
-  const sizes = { sm: "h-16 w-16", md: "h-28 w-28", lg: "h-44 w-44" };
-  const stroke = `ghana-stroke-${uid}`;
-  const fill = `ghana-fill-${uid}`;
-  const clip = `africa-clip-${uid}`;
+  const sizes = { sm: "h-16 w-16", md: "h-24 w-24", lg: "h-40 w-40" };
 
   return (
-    <div className={cn("relative", sizes[size], className)} role="status" aria-label="Loading">
-      <svg viewBox="0 0 160 160" className="absolute inset-0 h-full w-full africa-ring">
-        <defs>
-          <linearGradient id={stroke} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--ghana-green)" />
-            <stop offset="48%" stopColor="var(--ghana-gold)" />
-            <stop offset="100%" stopColor="var(--ghana-red)" />
-          </linearGradient>
-        </defs>
-        <circle
-          cx="80"
-          cy="80"
-          r="74"
-          fill="none"
-          stroke={`url(#${stroke})`}
-          strokeWidth="5"
-          strokeLinecap="round"
-          strokeDasharray="140 320"
-        />
-      </svg>
-      <svg viewBox="0 0 180 250" className="absolute inset-[12%] h-[76%] w-[76%]">
-        <defs>
-          <linearGradient id={fill} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--ghana-green)" />
-            <stop offset="50%" stopColor="var(--ghana-gold)" />
-            <stop offset="100%" stopColor="var(--ghana-red)" />
-          </linearGradient>
-          <clipPath id={clip}>
-            <path d={AFRICA_PATH} />
-            <path d={MADAGASCAR_PATH} />
-          </clipPath>
-        </defs>
-        <g clipPath={`url(#${clip})`}>
-          <rect className="africa-liquid" x="0" y="0" width="180" height="250" fill={`url(#${fill})`} />
-        </g>
-        <path
-          d={AFRICA_PATH}
-          fill="none"
-          stroke={`url(#${stroke})`}
-          strokeWidth="4"
-          strokeLinejoin="round"
-          className="africa-trace"
-        />
-        <path
-          d={MADAGASCAR_PATH}
-          fill="none"
-          stroke="var(--ghana-gold)"
-          strokeWidth="3.5"
-          strokeLinejoin="round"
-          className="africa-trace"
-        />
-        <circle cx="48" cy="98" r="5" fill="var(--ghana-gold)" className="ghana-pulse" />
-      </svg>
+    <div className={cn("relative flex flex-col items-center", sizes[size], className)} role="status" aria-label="Loading">
+      <AfricaLogoMark stage={4} className="h-full w-full africa-logo-breathe" />
     </div>
   );
 }
 
 export function AfricaLoader({
-  label = "Preparing your markets",
+  label = "Connecting markets…",
 }: {
   label?: string;
 }) {
@@ -78,7 +22,9 @@ export function AfricaLoader({
     <div className="flex flex-col items-center gap-5 text-center">
       <AfricaSpinner size="lg" />
       <div>
-        <p className="font-display text-2xl tracking-tight">Africa Invest</p>
+        <p className="font-display text-2xl tracking-[0.12em] uppercase">
+          Africa <span className="text-accent">Invest</span>
+        </p>
         <p className="mt-1 text-sm text-muted-foreground">{label}</p>
       </div>
     </div>

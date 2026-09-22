@@ -80,7 +80,7 @@ export async function simulateFill(orderId: string, userId?: string, opts?: { re
         userId,
         category: "order",
         title: "Order rejected",
-        body: "The sandbox broker rejected this order. Your cash was not invested.",
+        body: "This order could not be completed. Your cash was not invested.",
       });
     }
     return prisma.order.findUniqueOrThrow({ where: { id: order.id } });

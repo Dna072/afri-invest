@@ -76,7 +76,7 @@ export function StatusBadge({ status }: { status: string }) {
 export function SandboxMark() {
   return (
     <span className="rounded-full bg-accent/20 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-accent-foreground">
-      Sandbox
+      Illustrative
     </span>
   );
 }

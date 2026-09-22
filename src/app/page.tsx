@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Clock3, Landmark, Shield } from "lucide-react";
+import { Globe2, ShieldCheck, Receipt, Landmark } from "lucide-react";
 import { PublicShell } from "@/components/chrome/public-shell";
 import { WaitlistForm } from "@/components/forms/waitlist-form";
 import { AfricaMap } from "@/components/markets/africa-map";
@@ -15,20 +15,24 @@ const featured = ASSET_SEED.filter((a) => a.marketId === "ghana" && a.assetType 
 
 const faqs = [
   [
-    "Is this a live brokerage?",
-    "No. Africa Invest is under development. Prices, orders and KYC are sandbox. No licence is claimed.",
+    "Is Africa Invest a live brokerage?",
+    "Not yet. The product is under development. You can walk the full investing flow with illustrative prices. We do not claim a live brokerage licence.",
   ],
   [
-    "Why Accra on the clock?",
-    "Ghana is the first modelled market. The product keeps Africa/Accra hours so the Ghana corridor stays honest — even when you fund in SEK or GBP.",
+    "Why start with Ghana?",
+    "We are a platform for investors everywhere. Ghana is the first market we are piloting. After Ghana we expand to other African exchanges, then offer global stocks to African investors.",
   ],
   [
-    "Can I invest from outside Ghana?",
-    "That is the point of the MVP: one account, multi-currency funding, an explicit FX quote, then a Ghana portfolio. Live rails are not connected yet.",
+    "Do I need KYC?",
+    "Yes. Every investor completes identity verification before they can add money or buy securities. This is required for all users, wherever you live.",
   ],
   [
-    "Are the GSE quotes real?",
-    "They are illustrative sandbox quotes used to walk the product. We will not dress mock data as a live feed.",
+    "How are taxes handled?",
+    "Tax liabilities follow your country of residence. We collect residence so we can show withholding, capital-gains and reporting rules that apply to you.",
+  ],
+  [
+    "What can I buy?",
+    "African stocks, ETFs, funds and government securities. Ghana listings are available to explore today. Other African exchanges and global stocks are next.",
   ],
 ];
 
@@ -37,30 +41,30 @@ export default function LandingPage() {
     <PublicShell>
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-10 md:grid-cols-2 md:pt-16">
         <Reveal>
-          <p className="eyebrow">From Accra · diaspora ready</p>
+          <p className="eyebrow">Stocks · ETFs · African exchanges</p>
           <h1 className="mt-3 font-display text-5xl leading-[1.05] md:text-6xl">
-            Invest in <span className="text-[color:var(--accent)]">African</span> markets from anywhere.
+            Invest in <span className="text-[color:var(--accent)]">African</span> stocks from one account.
           </h1>
           <p className="mt-5 max-w-md text-lg text-muted-foreground">
-            One account. Transparent FX. Ghana equities and bills in the sandbox today — other exchanges architected, not
-            pretended.
+            Buy shares and ETFs on African exchanges. We are piloting in Ghana first, then expanding across Africa — and
+            adding global stocks for African investors.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg">
-              <Link href="/login">
-                Explore the product <span aria-hidden>→</span>
+              <Link href="/signup">
+                Start investing <span aria-hidden>→</span>
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link href="#waitlist">Join the waitlist</Link>
+              <Link href="/stocks">Explore African stocks</Link>
             </Button>
           </div>
           <p className="mt-6 max-w-md text-xs text-muted-foreground">
-            Under development. Sandbox prices. Not a live brokerage. No licence is claimed.
+            Under development. Not a live brokerage. KYC required for every investor.
           </p>
         </Reveal>
         <Reveal delay={0.12}>
-          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
+          <div className="lift rounded-xl bg-[color:var(--navy-card)] p-6 text-on-navy">
             <div className="flex items-center justify-between gap-3">
               <p className="eyebrow text-accent">Portfolio preview</p>
               <SessionBadge className="bg-white/10 text-on-navy" />
@@ -69,7 +73,7 @@ export default function LandingPage() {
               <CountUp value={84240.32} prefix="GH₵ " />
             </p>
             <p className="mt-1 text-sm text-on-navy/70">
-              Ghana positions + GHS cash · <PriceChange value="4.82" className="text-accent" /> sandbox
+              Ghana positions + cash · <PriceChange value="4.82" className="text-accent" /> illustrative
             </p>
             <div className="mt-6">
               <p className="eyebrow">Ghana stocks today</p>
@@ -92,13 +96,24 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
+      <section className="mx-auto max-w-6xl px-4 pb-6">
+        <div className="rounded-xl border border-border bg-card p-5 md:p-6">
+          <p className="eyebrow">Direct answer</p>
+          <h2 className="mt-2 font-display text-2xl">How do I buy African stocks?</h2>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+            Create an account, complete KYC, add money, then place an order. Ghana is the first market you can walk
+            through today. Other African exchanges and global stocks follow.
+          </p>
+        </div>
+      </section>
+
       <section className="border-y border-border bg-card/60">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 md:grid-cols-4">
           {[
-            ["1", "Live market modelled", "Ghana / GSE sandbox"],
-            ["4", "Exchanges architected", "NGX · NSE · JSE · BRVM"],
-            ["GHS", "Local execution", "SEK · GBP · USD funding"],
-            ["Accra", "Clock we keep", "09:30–15:00 GMT"],
+            ["1", "Pilot market", "Ghana Stock Exchange"],
+            ["5+", "African exchanges", "NGX · NSE · JSE · BRVM next"],
+            ["KYC", "Required for all", "Identity check before you invest"],
+            ["Tax", "By residence", "Shown before you buy"],
           ].map(([stat, label, hint], i) => (
             <Reveal key={label} delay={i * 0.05}>
               <p className="font-display text-4xl">{stat}</p>
@@ -112,16 +127,17 @@ export default function LandingPage() {
       <section id="markets" className="mx-auto max-w-6xl px-4 py-16">
         <Reveal>
           <p className="eyebrow">Featured Ghana listings</p>
-          <h2 className="mt-2 font-display text-4xl">GSE names, in daylight.</h2>
+          <h2 className="mt-2 font-display text-4xl">Buy Ghana stocks first.</h2>
           <p className="mt-2 max-w-xl text-muted-foreground">
-            Illustrative sandbox quotes. MTN Ghana, GCB, Fan Milk and more — the same list Derrick sees after sign-in.
+            MTN Ghana, GCB, Fan Milk and other GSE names. Prices are illustrative while the Ghana pilot is under
+            development.
           </p>
         </Reveal>
         <div className="mt-8 grid gap-3 md:grid-cols-2">
           {featured.map((asset, i) => (
             <Reveal key={asset.symbol} delay={i * 0.04}>
               <StockRow
-                href="/login"
+                href={`/stocks/ghana/${asset.symbol.toLowerCase()}`}
                 symbol={asset.symbol}
                 name={asset.name}
                 subtitle={`${asset.symbol} · GSE · ${asset.sector}`}
@@ -131,26 +147,32 @@ export default function LandingPage() {
             </Reveal>
           ))}
         </div>
+        <div className="mt-6">
+          <Button asChild variant="outline">
+            <Link href="/stocks">See all African stocks</Link>
+          </Button>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-16">
         <Reveal>
-          <h2 className="font-display text-4xl">Discover African markets</h2>
+          <h2 className="font-display text-4xl">African markets, then global.</h2>
           <p className="mt-2 max-w-xl text-muted-foreground">
-            Ghana is modelled first. The rest are marked honestly as coming soon.
+            Ghana is live to explore. Nigeria, Kenya, South Africa and the BRVM are next. Global stocks for African
+            investors come after that.
           </p>
         </Reveal>
         <div className="mt-8">
           <AfricaMap />
         </div>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-5">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
           {MARKET_SEED.map((m) => (
-            <div key={m.id} className="lift rounded-xl bg-card px-4 py-4 text-sm">
+            <Link key={m.id} href={`/stocks/${m.id.replace("_", "-")}`} className="lift rounded-xl bg-card px-4 py-4 text-sm">
               <p className="font-semibold">{m.exchanges[0]?.name}</p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {m.country} · {m.currency}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -159,14 +181,14 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 py-16">
           <Reveal>
             <p className="eyebrow text-accent">How it works</p>
-            <h2 className="mt-2 font-display text-4xl">SEK → GHS → Ghana, without the mystery.</h2>
+            <h2 className="mt-2 font-display text-4xl">Start investing in four steps.</h2>
           </Reveal>
           <ol className="mt-10 grid gap-4 md:grid-cols-4">
             {[
-              ["01", "Open an account", "Demo personas or a sandbox signup. KYC is mocked."],
-              ["02", "Fund in your currency", "SEK, GBP, EUR, USD or GHS. Ledger-backed cash."],
-              ["03", "Convert with a quote", "Rate, spread, fee and amount received. Quotes expire."],
-              ["04", "Invest on GSE", "Equities, bills and funds in the Ghana sandbox."],
+              ["01", "Create an account", "Tell us who you are and where you live. Residence drives tax."],
+              ["02", "Verify your identity", "KYC is required for every investor before you can add money."],
+              ["03", "Add money", "Fund in the currency you already use. FX is shown before you convert."],
+              ["04", "Buy stocks and ETFs", "Start with Ghana. Other African exchanges and global stocks follow."],
             ].map(([n, title, body], i) => (
               <Reveal key={n} delay={i * 0.06}>
                 <li className="rounded-xl bg-white/5 p-5 transition hover:-translate-y-1 hover:bg-white/8">
@@ -182,16 +204,16 @@ export default function LandingPage() {
 
       <section className="mx-auto max-w-6xl px-4 py-16">
         <Reveal>
-          <p className="eyebrow">What we will not hide</p>
-          <h2 className="mt-2 font-display text-4xl">Trust is a layout, not a badge dump.</h2>
+          <p className="eyebrow">Built for investors</p>
+          <h2 className="mt-2 font-display text-4xl">Clear rules before you buy.</h2>
         </Reveal>
         <div className="mt-8 grid gap-3 md:grid-cols-4">
           {(
             [
-              [Shield, "A ledger, not a number", "Cash and holdings sit on double-entry books."],
-              [Landmark, "FX in daylight", "Every quote shows rate, spread, fee and amount received."],
-              [Clock3, "Accra hours", "GSE is modelled 09:30–15:00 GMT. We keep that clock."],
-              [BookOpen, "No licence theatre", "Sandbox data. Educational only. Nothing is claimed that does not exist."],
+              [ShieldCheck, "KYC for every user", "Identity verification is required. No shortcuts, wherever you live."],
+              [Receipt, "Tax by residence", "We use your country of residence to surface the tax rules that apply to you."],
+              [Landmark, "African exchanges first", "Ghana now. Nigeria, Kenya, South Africa and BRVM next."],
+              [Globe2, "Global stocks next", "US and European shares for African investors, once the rails are ready."],
             ] as const
           ).map(([Icon, title, body], i) => (
             <Reveal key={title} delay={i * 0.05}>
@@ -205,37 +227,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-4 pb-16 md:grid-cols-3">
-        {[
-          [
-            "Built for the diaspora",
-            "Fund from SEK, GBP, EUR or USD, then invest into African markets without naming the plumbing.",
-          ],
-          [
-            "A ledger, not a number",
-            "Cash, equities, treasuries and funds sit on double-entry books. Balances are not a field on a user row.",
-          ],
-          [
-            "Fees in daylight",
-            "Every quote shows the rate, spread, fee and amount received. Illustrative prototype pricing only.",
-          ],
-        ].map(([title, body], i) => (
-          <Reveal key={title} delay={i * 0.06}>
-            <article className="lift h-full rounded-xl bg-card p-6">
-              <h3 className="font-display text-2xl">{title}</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{body}</p>
-            </article>
-          </Reveal>
-        ))}
-      </section>
-
       <section className="mx-auto max-w-6xl px-4 pb-8">
-        <div className="rounded-[1.25rem] bg-primary px-6 py-10 text-primary-foreground md:px-12">
-          <p className="eyebrow text-accent">Long-term wealth</p>
-          <h2 className="mt-2 font-display text-4xl">Global markets, coming soon.</h2>
+        <div className="rounded-xl bg-primary px-6 py-10 text-primary-foreground md:px-12">
+          <p className="eyebrow text-accent">Coming next</p>
+          <h2 className="mt-2 font-display text-4xl">Global stocks for African investors.</h2>
           <p className="mt-4 max-w-2xl text-primary-foreground/80">
-            US stocks, European markets and global ETFs need extra regulatory, brokerage and tax work. We will not pretend
-            they are live.
+            After African exchanges, you will be able to buy US and European stocks and ETFs from the same account. That
+            offering is not live yet.
           </p>
         </div>
       </section>
@@ -257,9 +255,9 @@ export default function LandingPage() {
 
       <section id="waitlist" className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-2">
         <div>
-          <h2 className="font-display text-4xl">Join the early access list</h2>
+          <h2 className="font-display text-4xl">Get early access</h2>
           <p className="mt-3 text-muted-foreground">
-            Tell us where you live and which markets you care about. Stored as development/mock persistence.
+            Tell us where you live and which markets you want. We use residence to plan KYC and tax coverage.
           </p>
         </div>
         <WaitlistForm />

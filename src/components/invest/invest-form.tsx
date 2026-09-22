@@ -51,7 +51,7 @@ export function InvestForm({ assetId, currency, min }: { assetId: string; curren
               className="mt-2 min-h-14 w-full rounded-2xl border bg-card px-4 text-2xl tabular"
             />
           </label>
-          <p className="text-xs text-muted-foreground">Minimum {min} {currency}. Illustrative sandbox pricing.</p>
+          <p className="text-xs text-muted-foreground">Minimum {min} {currency}. Illustrative pricing.</p>
           {error ? <p className="text-sm text-destructive">{error}</p> : null}
           <Button className="w-full sticky bottom-4" onClick={() => void loadPreview()}>
             Review order
@@ -105,8 +105,8 @@ export function InvestForm({ assetId, currency, min }: { assetId: string; curren
       {step === "done" ? (
         <div className="rounded-3xl bg-primary p-6 text-primary-foreground">
           <p className="text-xs uppercase tracking-[0.2em] text-accent">Order submitted</p>
-          <p className="mt-2 font-display text-3xl">The sandbox broker has settled this order.</p>
-          <p className="mt-3 text-sm text-primary-foreground/80">Your portfolio and ledger have been updated. Order {orderId}</p>
+          <p className="mt-2 font-display text-3xl">Your order has been placed.</p>
+          <p className="mt-3 text-sm text-primary-foreground/80">Your portfolio has been updated. Order {orderId}</p>
           <Button className="mt-6" variant="gold" onClick={() => router.push("/app/portfolio")}>
             View portfolio
           </Button>

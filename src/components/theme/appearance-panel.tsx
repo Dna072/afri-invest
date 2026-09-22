@@ -19,7 +19,7 @@ export function AppearancePanel() {
       <p className="eyebrow">Appearance</p>
       <h2 className="mt-1 font-display text-2xl">Light, dark, and colour.</h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Saved on this device. The Ghana ribbon and Accra clock stay. Midnight is the closest to a classic navy desk.
+        Saved on this device. The Ghana ribbon and GSE market clock stay. Midnight is the closest to a classic navy desk.
       </p>
       <div className="mt-5 grid gap-2 sm:grid-cols-3">
         {appearances.map((item) => {

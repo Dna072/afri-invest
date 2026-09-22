@@ -51,7 +51,7 @@ export function SideNav() {
       <Link href="/app" className="block">
         <BrandMark />
       </Link>
-      <p className="mt-2 text-xs text-muted-foreground">Invest in Africa from anywhere.</p>
+      <p className="mt-2 text-xs text-muted-foreground">Invest today. A brighter Africa tomorrow.</p>
       <ul className="mt-8 space-y-1">
         {items.map((item) => {
           const active = item.href === "/app" ? pathname === "/app" : pathname.startsWith(item.href);

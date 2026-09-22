@@ -28,18 +28,19 @@ export default async function MarketsPage({
   return (
     <AppShell title="Explore African Markets">
       {ghanaFirst ? (
-        <div className="mb-6 rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
+        <div className="mb-6 rounded-xl bg-[color:var(--navy-card)] p-6 text-on-navy">
           <p className="eyebrow text-accent">Ghana Stock Exchange</p>
-          <h2 className="mt-2 font-display text-3xl">GSE listings, in the sandbox.</h2>
+          <h2 className="mt-2 font-display text-3xl">Ghana is the first market you can buy.</h2>
           <p className="mt-2 max-w-xl text-sm text-on-navy/70">
-            Hours 09:30–15:00 GMT · Accra. Quotes are illustrative. Other exchanges stay marked coming soon.
+            GSE hours 09:30–15:00 GMT. Quotes are illustrative. Other African exchanges and global stocks are marked
+            coming soon.
           </p>
           <div className="mt-4">
             <SessionBadge className="bg-white/10 text-on-navy" />
           </div>
         </div>
       ) : (
-        <p className="mb-4 text-sm text-muted-foreground">Preview market — not live. Ghana remains the modelled corridor.</p>
+        <p className="mb-4 text-sm text-muted-foreground">This market is not open yet. Ghana is the current pilot.</p>
       )}
       <AfricaMap />
       <div className="mt-6 flex gap-2 overflow-x-auto pb-2">

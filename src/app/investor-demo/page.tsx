@@ -3,7 +3,7 @@ import { PublicShell } from "@/components/chrome/public-shell";
 import { Reveal } from "@/components/motion/reveal";
 import { BusinessModel } from "@/components/investor/business-model";
 
-export const metadata = { title: "Investor demo" };
+export const metadata = { title: "Product tour" };
 
 export default function InvestorDemoPage() {
   return (
@@ -11,38 +11,41 @@ export default function InvestorDemoPage() {
     <div className="mx-auto max-w-5xl px-4 py-10">
       <Reveal>
       <p className="eyebrow">Product tour</p>
-      <h1 className="mt-2 font-display text-5xl">The product, in one sitting.</h1>
+      <h1 className="mt-2 font-display text-5xl">The investing flow, in one sitting.</h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">
-        This is a guided walkthrough for prospective investors. It is the product, not a slide deck. Sandbox data throughout.
+        Walk the same path a customer uses: account, KYC, funding, then buy African stocks. Prices are illustrative. This
+        is not a live brokerage.
       </p>
       </Reveal>
       <ol className="mt-10 space-y-8">
-        <Step n="01" title="Problem">
-          Africans at home and abroad lack a single, trustworthy way to invest across African public markets. Diaspora capital often sits in European current accounts while Ghanaian (and later Nigerian, Kenyan, South African) markets remain operationally distant.
+        <Step n="01" title="The problem">
+          Africans at home and abroad want a single place to buy stocks and ETFs on African exchanges — and later, global
+          stocks — without opening a new broker in every country.
         </Step>
-        <Step n="02" title="Solution">
-          One investment account. Multi-currency funding. Explicit FX. African market access starting with Ghana. A ledger, not a fake balance field.
+        <Step n="02" title="The product">
+          One investment account. KYC for every user. Tax based on country of residence. African market access starting
+          with Ghana, then other exchanges, then global stocks.
         </Step>
-        <Step n="03" title="Product">
-          Open <Link href="/login" className="underline">the customer app as Derrick</Link> — Ghanaian living in Sweden, SEK on the left, Ghana portfolio on the right.
+        <Step n="03" title="Try it">
+          Open <Link href="/login" className="underline">the app with a demo profile</Link> to see a Ghana portfolio,
+          place an order and convert currency.
         </Step>
-        <Step n="04" title="Diaspora experience">
-          SEK → FX quote (rate, spread, fee, amount received) → GHS → Ghana stock or treasury. The customer never needs to name the broker, custodian or PSP.
+        <Step n="04" title="The customer path">
+          Create account → verify identity → add money → buy a Ghana stock or ETF. Other African exchanges are listed as
+          coming soon.
         </Step>
-        <Step n="05" title="African market access">
-          Ghana is modelled. Nigeria, Kenya, South Africa and BRVM are discoverable and marked coming soon. Adding a market is configuration plus providers.
+        <Step n="05" title="Markets">
+          Ghana is the pilot. Nigeria, Kenya, South Africa and the BRVM follow. Global stocks for African investors are
+          planned, not live.
         </Step>
-        <Step n="06" title="Business model">
-          Transparent trading, FX, platform/AUM, subscriptions and future B2B APIs. No dark patterns. The simulator below is labelled illustrative.
+        <Step n="06" title="Fees">
+          Trading and FX costs are shown before you confirm. The calculator on the fees page is labelled illustrative.
         </Step>
-        <Step n="07" title="Regulatory roadmap">
-          Open the <Link href="/admin/regulatory" className="underline">Control Tower</Link>. Stages cannot pass with open mandatory gates. Classification is marked Needs Legal Review where uncertain.
+        <Step n="07" title="Compliance">
+          KYC, AML, tax residence and audit sit in the operations console. Stages cannot skip mandatory checks.
         </Step>
-        <Step n="08" title="Operational architecture">
-          Ledger, reconciliation, KYC/AML, audit, incidents, complaints, partner CRM — all first-class, with mock providers behind interfaces.
-        </Step>
-        <Step n="09" title="Expansion">
-          Ghana → additional African markets → global markets via a future GlobalBrokerProvider. Not hardcoded to one vendor.
+        <Step n="08" title="What is not claimed">
+          No live licence, no live market data, no live custody. The walkthrough is the product under development.
         </Step>
       </ol>
       <div className="mt-12">

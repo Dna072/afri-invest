@@ -242,8 +242,8 @@
   --color-input: var(--input);
   --color-navy-card: var(--navy-card);
   --color-on-navy: var(--on-navy);
-  --font-sans: var(--font-jakarta);
-  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
   --font-mono: var(--font-ibm);
   --radius-sm: 0.375rem;
   --radius-md: var(--radius);
@@ -262,14 +262,17 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   min-height: 100dvh;
   transition: background-color 280ms var(--ease), color 280ms var(--ease);
 }
 
 .font-display {
-  font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-optical-sizing: auto;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  word-spacing: 0.02em;
 }
 
 .tabular {
@@ -387,6 +390,10 @@ body {
   transition: transform 0.65s var(--ease);
 }
 
+.africa-logo-breathe {
+  animation: logo-breathe 1.8s ease-in-out infinite;
+}
+
 .africa-ring {
   animation: spin 1.8s linear infinite;
 }
@@ -449,6 +456,18 @@ body {
   }
 }
 
+@keyframes logo-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes fill-africa {
   from {
     transform: translateY(105%);
@@ -500,6 +519,7 @@ body {
   }
   .ticker-track,
   .africa-ring,
+  .africa-logo-breathe,
   .africa-liquid,
   .africa-trace,
   .ghana-pulse,

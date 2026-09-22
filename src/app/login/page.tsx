@@ -16,9 +16,9 @@ export default function LoginPage() {
       <div className="mx-auto grid max-w-6xl items-start gap-10 px-4 py-14 md:grid-cols-2">
         <div className="mx-auto w-full max-w-md md:mx-0">
           <p className="eyebrow">Africa Invest</p>
-          <h1 className="mt-2 font-display text-4xl">Enter the product</h1>
+          <h1 className="mt-2 font-display text-4xl">Sign in</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Use a demo persona to walk the Sweden → Ghana journey in minutes.
+            Continue to your account, or try a demo profile to walk the investing flow.
           </p>
           <div className="mt-8">
             <Suspense>
@@ -28,18 +28,18 @@ export default function LoginPage() {
           <p className="mt-6 text-sm">
             New here?{" "}
             <Link href="/signup" className="font-medium text-primary underline">
-              Create an account
+              Start investing
             </Link>
           </p>
         </div>
         <aside className="hidden md:block">
-          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
+          <div className="lift rounded-xl bg-[color:var(--navy-card)] p-6 text-on-navy">
             <div className="flex items-center justify-between">
-              <p className="eyebrow text-accent">GSE sandbox</p>
+              <p className="eyebrow text-accent">Ghana Stock Exchange</p>
               <SessionBadge className="bg-white/10 text-on-navy" />
             </div>
-            <p className="mt-3 font-display text-3xl">Ghana names, waiting.</p>
-            <p className="mt-2 text-sm text-on-navy/70">Illustrative quotes. Sign in as Derrick to hold them.</p>
+            <p className="mt-3 font-display text-3xl">Ghana names you can explore.</p>
+            <p className="mt-2 text-sm text-on-navy/70">Illustrative quotes from the Ghana pilot.</p>
             <ul className="mt-6 divide-y divide-white/10">
               {preview.map((asset) => (
                 <li key={asset.symbol} className="flex items-center justify-between py-2.5 text-sm">

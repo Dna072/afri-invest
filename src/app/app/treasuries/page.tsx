@@ -9,7 +9,7 @@ export default async function TreasuriesPage() {
   });
   return (
     <AppShell title="Treasuries">
-      <p className="text-sm text-muted-foreground">Yields are indicative sandbox figures, not live auction results.</p>
+      <p className="text-sm text-muted-foreground">Yields are indicative figures, not live auction results.</p>
       <ul className="mt-4 space-y-2">
         {bills.map((b) => (
           <li key={b.id}>

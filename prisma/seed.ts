@@ -7,13 +7,8 @@ const prisma = new PrismaClient();
 const DEMO_PASSWORD = "AfricaInvest!demo";
 
 async function main() {
-  console.log("Seeding Africa Invest sandbox…");
+  console.log("Seeding Africa Invest…");
   const alreadySeeded = await prisma.user.findUnique({ where: { email: "derrick@africainvest.demo" } });
-  if (alreadySeeded) {
-    console.log("Demo data already present. Skipping seed. Use npm run reset-demo to rebuild.");
-    return;
-  }
-  const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
 
   await prisma.$transaction(CURRENCY_SEED.map((c) => prisma.currency.upsert({ where: { code: c.code }, update: c, create: c })));
 
@@ -49,17 +44,34 @@ async function main() {
         create: { ...ex, marketId: market.id },
       });
     }
-    await prisma.tradingCalendar.create({
-      data: {
-        marketId: market.id,
-        timezone: market.timezone,
-        openTime: "10:00",
-        closeTime: "15:00",
-        tradingDays: "1,2,3,4,5",
-        holidaysJson: "[]",
-      },
-    });
+    const existingCal = await prisma.tradingCalendar.findFirst({ where: { marketId: market.id } });
+    if (!existingCal) {
+      await prisma.tradingCalendar.create({
+        data: {
+          marketId: market.id,
+          timezone: market.timezone,
+          openTime: "10:00",
+          closeTime: "15:00",
+          tradingDays: "1,2,3,4,5",
+          holidaysJson: "[]",
+        },
+      });
+    }
   }
+
+  if (alreadySeeded) {
+    for (const asset of ASSET_SEED) {
+      const exists = await prisma.asset.findFirst({ where: { symbol: asset.symbol, exchangeId: asset.exchangeId } });
+      if (!exists) {
+        await prisma.asset.create({
+          data: { ...asset, status: "sandbox", dataSource: "sandbox" },
+        });
+      }
+    }
+    console.log("Demo data already present. Market catalog refreshed. Use npm run reset-demo to rebuild users.");
+    return;
+  }
+  const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
 
   const assetIds: Record<string, string> = {};
   for (const asset of ASSET_SEED) {
