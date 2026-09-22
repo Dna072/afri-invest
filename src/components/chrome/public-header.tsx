@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { AccraClock } from "@/components/brand/accra-clock";
 import { BrandMark } from "@/components/brand/mark";
+import { ThemeMenu } from "@/components/theme/theme-menu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
@@ -31,7 +32,7 @@ export function PublicHeader() {
     <header
       className={cn(
         "sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur transition-shadow duration-300",
-        scrolled && "shadow-[0_8px_24px_rgba(18,36,28,0.08)]",
+        scrolled && "shadow-[var(--shadow)]",
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
@@ -49,8 +50,9 @@ export function PublicHeader() {
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           <AccraClock compact />
+          <ThemeMenu />
           <Button asChild variant="ghost" size="sm">
             <Link href="/login">Sign in</Link>
           </Button>
@@ -61,9 +63,10 @@ export function PublicHeader() {
           </Button>
         </div>
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeMenu compact />
           <button
             type="button"
-            className="focus-ring rounded-md p-2"
+            className="focus-ring rounded-lg p-2"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -72,6 +75,7 @@ export function PublicHeader() {
           </button>
         </div>
         <div className="hidden items-center gap-2 md:flex lg:hidden">
+          <ThemeMenu />
           <Button asChild variant="ghost" size="sm">
             <Link href="/login">Sign in</Link>
           </Button>

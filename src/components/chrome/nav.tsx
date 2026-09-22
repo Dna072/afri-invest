@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { BookOpen, Home, LineChart, User, Wallet } from "lucide-react";
 import { AccraClock } from "@/components/brand/accra-clock";
 import { BrandMark } from "@/components/brand/mark";
+import { ThemeMenu } from "@/components/theme/theme-menu";
 import { cn } from "@/lib/cn";
 
 const items = [
@@ -71,7 +72,8 @@ export function SideNav() {
           );
         })}
       </ul>
-      <div className="mt-auto pt-8">
+      <div className="mt-auto space-y-3 pt-8">
+        <ThemeMenu align="left" drop="up" />
         <AccraClock compact />
       </div>
     </aside>

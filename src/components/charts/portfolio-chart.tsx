@@ -9,17 +9,22 @@ export function PortfolioChart({ data }: { data: Array<{ label: string; value: n
         <AreaChart data={data}>
           <defs>
             <linearGradient id="pv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#c9a24a" stopOpacity={0.4} />
-              <stop offset="100%" stopColor="#c9a24a" stopOpacity={0} />
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.4} />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity={0} />
             </linearGradient>
           </defs>
           <XAxis dataKey="label" hide />
           <YAxis hide domain={["dataMin", "dataMax"]} />
           <Tooltip
-            contentStyle={{ background: "#fffcf6", border: "1px solid #ddd4c2", borderRadius: 12 }}
+            contentStyle={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              borderRadius: 12,
+              color: "var(--foreground)",
+            }}
             formatter={(v: number) => [v.toLocaleString(), "Value"]}
           />
-          <Area type="monotone" dataKey="value" stroke="#c9a24a" fill="url(#pv)" strokeWidth={2} />
+          <Area type="monotone" dataKey="value" stroke="var(--accent)" fill="url(#pv)" strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
     </div>

@@ -33,19 +33,19 @@ export default function LoginPage() {
           </p>
         </div>
         <aside className="hidden md:block">
-          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground">
+          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
             <div className="flex items-center justify-between">
               <p className="eyebrow text-accent">GSE sandbox</p>
-              <SessionBadge className="bg-white/10 text-primary-foreground" />
+              <SessionBadge className="bg-white/10 text-on-navy" />
             </div>
             <p className="mt-3 font-display text-3xl">Ghana names, waiting.</p>
-            <p className="mt-2 text-sm text-primary-foreground/70">Illustrative quotes. Sign in as Derrick to hold them.</p>
+            <p className="mt-2 text-sm text-on-navy/70">Illustrative quotes. Sign in as Derrick to hold them.</p>
             <ul className="mt-6 divide-y divide-white/10">
               {preview.map((asset) => (
                 <li key={asset.symbol} className="flex items-center justify-between py-2.5 text-sm">
                   <div>
                     <p className="font-semibold">{asset.symbol}</p>
-                    <p className="text-xs text-primary-foreground/55">{asset.name}</p>
+                    <p className="text-xs text-on-navy/55">{asset.name}</p>
                   </div>
                   <div className="text-right">
                     <p className="tabular">GH₵ {asset.price}</p>
