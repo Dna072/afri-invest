@@ -60,15 +60,15 @@ export default function LandingPage() {
           </p>
         </Reveal>
         <Reveal delay={0.12}>
-          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground">
+          <div className="lift rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
             <div className="flex items-center justify-between gap-3">
               <p className="eyebrow text-accent">Portfolio preview</p>
-              <SessionBadge className="bg-white/10 text-primary-foreground" />
+              <SessionBadge className="bg-white/10 text-on-navy" />
             </div>
             <p className="mt-3 font-display text-4xl">
               <CountUp value={84240.32} prefix="GH₵ " />
             </p>
-            <p className="mt-1 text-sm text-primary-foreground/70">
+            <p className="mt-1 text-sm text-on-navy/70">
               Ghana positions + GHS cash · <PriceChange value="4.82" className="text-accent" /> sandbox
             </p>
             <div className="mt-6">
@@ -78,7 +78,7 @@ export default function LandingPage() {
                   <li key={asset.symbol} className="flex items-center justify-between py-2.5 text-sm">
                     <div>
                       <p className="font-semibold">{asset.symbol}</p>
-                      <p className="text-xs text-primary-foreground/55">{asset.name}</p>
+                      <p className="text-xs text-on-navy/55">{asset.name}</p>
                     </div>
                     <div className="text-right">
                       <p className="tabular">GH₵ {asset.price}</p>
@@ -155,7 +155,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="how" className="bg-[color:var(--navy-card)] text-primary-foreground">
+      <section id="how" className="bg-[color:var(--navy-card)] text-on-navy">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <Reveal>
             <p className="eyebrow text-accent">How it works</p>
@@ -172,7 +172,7 @@ export default function LandingPage() {
                 <li className="rounded-xl bg-white/5 p-5 transition hover:-translate-y-1 hover:bg-white/8">
                   <p className="font-display text-3xl text-accent">{n}</p>
                   <p className="mt-3 font-semibold">{title}</p>
-                  <p className="mt-2 text-sm text-primary-foreground/70">{body}</p>
+                  <p className="mt-2 text-sm text-on-navy/70">{body}</p>
                 </li>
               </Reveal>
             ))}

@@ -25,6 +25,7 @@
   --ring: #12382c;
   --input: #ddd4c2;
   --navy-card: #0d241c;
+  --on-navy: #f4efe4;
   --ticker: #eef3ee;
   --ghana-green: #006b3f;
   --ghana-gold: #fcd116;
@@ -240,6 +241,7 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-navy-card: var(--navy-card);
+  --color-on-navy: var(--on-navy);
   --font-sans: var(--font-jakarta);
   --font-display: var(--font-fraunces);
   --font-mono: var(--font-ibm);

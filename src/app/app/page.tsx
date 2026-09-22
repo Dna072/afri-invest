@@ -38,20 +38,20 @@ export default async function HomePage() {
 
   return (
     <AppShell title={`${greeting()}, ${user.firstName}`}>
-      <section className="rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground md:p-8">
+      <section className="rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy md:p-8">
         <div className="flex items-center justify-between">
           <p className="text-xs uppercase tracking-[0.2em] text-accent">Portfolio</p>
           <SandboxMark />
         </div>
         <div className="mt-3">
-          <MoneyText amount={portfolio.summary.total.toFixed()} currency={reporting} size="xl" className="text-primary-foreground" />
+          <MoneyText amount={portfolio.summary.total.toFixed()} currency={reporting} size="xl" className="text-on-navy" />
         </div>
-        <p className="mt-1 text-sm text-primary-foreground/70">Ghana portfolio · positions + GHS cash. Other currencies sit separately.</p>
+        <p className="mt-1 text-sm text-on-navy/70">Ghana portfolio · positions + GHS cash. Other currencies sit separately.</p>
         <div className="mt-2">
           <PriceChange value={portfolio.summary.returnPercent} className="text-accent" />
-          <span className="ml-2 text-sm text-primary-foreground/70">on invested capital · sandbox</span>
+          <span className="ml-2 text-sm text-on-navy/70">on invested capital · sandbox</span>
         </div>
-        <div className="mt-4 text-primary-foreground">
+        <div className="mt-4 text-on-navy">
           <PortfolioChart data={chart} />
         </div>
       </section>

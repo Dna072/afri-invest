@@ -32,7 +32,7 @@ export function AfricaSpinner({ className, size = "md" }: { className?: string; 
           strokeDasharray="140 320"
         />
       </svg>
-      <svg viewBox="0 0 320 400" className="absolute inset-[12%] h-[76%] w-[76%]">
+      <svg viewBox="0 0 280 360" className="absolute inset-[10%] h-[80%] w-[80%]">
         <defs>
           <linearGradient id={fill} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--ghana-green)" />
@@ -45,13 +45,13 @@ export function AfricaSpinner({ className, size = "md" }: { className?: string; 
           </clipPath>
         </defs>
         <g clipPath={`url(#${clip})`}>
-          <rect className="africa-liquid" x="0" y="0" width="320" height="400" fill={`url(#${fill})`} />
+          <rect className="africa-liquid" x="0" y="0" width="280" height="360" fill={`url(#${fill})`} />
         </g>
         <path
           d={AFRICA_PATH}
           fill="none"
           stroke={`url(#${stroke})`}
-          strokeWidth="7"
+          strokeWidth="6"
           strokeLinejoin="round"
           className="africa-trace"
         />
@@ -59,10 +59,10 @@ export function AfricaSpinner({ className, size = "md" }: { className?: string; 
           d={MADAGASCAR_PATH}
           fill="none"
           stroke="var(--ghana-gold)"
-          strokeWidth="6"
+          strokeWidth="5"
           className="africa-trace"
         />
-        <circle cx="98" cy="168" r="7" fill="var(--ghana-gold)" className="ghana-pulse" />
+        <circle cx="92" cy="148" r="6" fill="var(--ghana-gold)" className="ghana-pulse" />
       </svg>
     </div>
   );

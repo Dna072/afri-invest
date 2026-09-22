@@ -10,7 +10,7 @@ const countries: Array<{ id: string; name: string; x: number; y: number; status:
 
 export function AfricaMap({ onSelect }: { onSelect?: (id: string) => void }) {
   return (
-    <div className="relative overflow-hidden rounded-[1.25rem] bg-[color:var(--navy-card)] text-primary-foreground">
+    <div className="relative overflow-hidden rounded-[1.25rem] bg-[color:var(--navy-card)] text-on-navy">
       <svg viewBox="0 0 100 100" className="h-72 w-full opacity-90">
         <ellipse cx="50" cy="52" rx="28" ry="38" fill="color-mix(in srgb, var(--navy-card) 70%, black)" />
         <path
@@ -38,7 +38,7 @@ export function AfricaMap({ onSelect }: { onSelect?: (id: string) => void }) {
             className="rounded-lg bg-black/25 px-3 py-2 text-left text-sm backdrop-blur transition hover:-translate-y-0.5"
           >
             <p className="font-medium">{c.name}</p>
-            <p className="text-xs text-primary-foreground/70">{c.status}</p>
+            <p className="text-xs text-on-navy/70">{c.status}</p>
           </button>
         ))}
       </div>

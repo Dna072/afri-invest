@@ -34,7 +34,7 @@ export function StockRow({
       <SymbolAvatar symbol={symbol} />
       <div className="min-w-0 flex-1">
         <p className="truncate font-semibold">{name}</p>
-        <p className={cn("truncate text-xs", dark ? "text-primary-foreground/55" : "text-muted-foreground")}>
+        <p className={cn("truncate text-xs", dark ? "text-on-navy/55" : "text-muted-foreground")}>
           {subtitle}
         </p>
       </div>

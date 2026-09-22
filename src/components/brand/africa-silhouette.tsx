@@ -1,10 +1,11 @@
 import { cn } from "@/lib/cn";
 
-/** Simplified Africa + Madagascar silhouette (decorative, not a map). */
+/** Decorative Africa + Madagascar — recognisable outline, not a gazetteer. */
 export const AFRICA_PATH =
-  "M178 22c28 4 52 22 62 48 18 8 42 22 46 46 6 28-12 50-24 72 18 22 38 48 26 78-10 24-42 32-58 54 8 26 6 56-18 74-24 18-58 14-84 2-22 18-56 22-82-2-24-22-22-62-8-88-28-18-46-52-28-84 12-22 46-28 62-50-16-24-6-56 18-74 18-22 50-28 72-18 6-8 18-10 28-8z";
+  "M118 20c42-12 86 6 96 48c26 8 48 38 32 74c32 22 42 70 8 96c14 38-8 84-50 98c-22 24-64 26-86-2c-28 16-64 0-72-40c-30-18-28-62 4-84c-30-24-18-66 18-78c-16-34 8-74 44-78c-4-16-2-28 6-34z";
 
-export const MADAGASCAR_PATH = "M268 168c8 4 14 16 12 28-2 14-12 24-22 30-8-10-8-24-4-36 4-10 8-18 14-22z";
+export const MADAGASCAR_PATH =
+  "M236 188c16 8 22 40 8 64c-14 14-32 6-34-16c0-24 12-42 26-48z";
 
 export function AfricaSilhouette({
   className,
@@ -14,7 +15,7 @@ export function AfricaSilhouette({
   fill?: string;
 }) {
   return (
-    <svg viewBox="0 0 320 400" className={cn("overflow-visible", className)} aria-hidden>
+    <svg viewBox="0 0 280 360" className={cn("overflow-visible", className)} aria-hidden>
       <path d={AFRICA_PATH} fill={fill} />
       <path d={MADAGASCAR_PATH} fill={fill} />
     </svg>

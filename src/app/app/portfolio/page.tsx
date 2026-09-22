@@ -14,15 +14,15 @@ export default async function PortfolioPage() {
   const chart = portfolio.history.find((h) => h.range === "1Y")?.values ?? [];
   return (
     <AppShell title="Portfolio">
-      <div className="rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground">
+      <div className="rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
         <p className="eyebrow text-accent">Ghana portfolio</p>
-        <MoneyText amount={portfolio.summary.total.toFixed()} currency="GHS" size="xl" className="text-primary-foreground" />
-        <div className="mt-2 flex gap-4 text-sm text-primary-foreground/75">
-          <span>Invested <MoneyText amount={portfolio.summary.invested.toFixed()} currency="GHS" className="text-primary-foreground" /></span>
+        <MoneyText amount={portfolio.summary.total.toFixed()} currency="GHS" size="xl" className="text-on-navy" />
+        <div className="mt-2 flex gap-4 text-sm text-on-navy/75">
+          <span>Invested <MoneyText amount={portfolio.summary.invested.toFixed()} currency="GHS" className="text-on-navy" /></span>
           <PriceChange value={portfolio.summary.returnPercent} className="text-accent" />
         </div>
         <PortfolioChart data={chart} />
-        <div className="mt-2 flex gap-2 text-xs text-primary-foreground/70">
+        <div className="mt-2 flex gap-2 text-xs text-on-navy/70">
           {portfolio.history.map((h) => (
             <span key={h.range} className="rounded-full bg-white/10 px-2 py-1">{h.range}</span>
           ))}

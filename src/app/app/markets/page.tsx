@@ -28,14 +28,14 @@ export default async function MarketsPage({
   return (
     <AppShell title="Explore African Markets">
       {ghanaFirst ? (
-        <div className="mb-6 rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground">
+        <div className="mb-6 rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-on-navy">
           <p className="eyebrow text-accent">Ghana Stock Exchange</p>
           <h2 className="mt-2 font-display text-3xl">GSE listings, in the sandbox.</h2>
-          <p className="mt-2 max-w-xl text-sm text-primary-foreground/70">
+          <p className="mt-2 max-w-xl text-sm text-on-navy/70">
             Hours 09:30–15:00 GMT · Accra. Quotes are illustrative. Other exchanges stay marked coming soon.
           </p>
           <div className="mt-4">
-            <SessionBadge className="bg-white/10 text-primary-foreground" />
+            <SessionBadge className="bg-white/10 text-on-navy" />
           </div>
         </div>
       ) : (

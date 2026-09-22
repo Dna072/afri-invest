@@ -32,7 +32,7 @@ export function AdminShell({ children, title }: { children: React.ReactNode; tit
     <div className="min-h-dvh">
       <div className="kente-ribbon" aria-hidden />
       <div className="min-h-[calc(100dvh-3px)] md:flex">
-        <aside className="hidden w-64 shrink-0 border-r border-border bg-[color:var(--navy-card)] text-primary-foreground md:block">
+        <aside className="hidden w-64 shrink-0 border-r border-border bg-[color:var(--navy-card)] text-on-navy md:block">
           <div className="p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-accent">Operations</p>
             <p className="font-display text-2xl">Control</p>
