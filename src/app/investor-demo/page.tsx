@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { PublicShell } from "@/components/chrome/public-shell";
 import { BusinessModel } from "@/components/investor/business-model";
 
 export const metadata = { title: "Investor demo" };
 
 export default function InvestorDemoPage() {
   return (
+    <PublicShell>
     <div className="mx-auto max-w-5xl px-4 py-10">
       <p className="text-xs uppercase tracking-[0.25em]">Africa Invest</p>
       <h1 className="mt-2 font-display text-5xl">The product, in one sitting.</h1>
@@ -44,6 +46,7 @@ export default function InvestorDemoPage() {
         <BusinessModel />
       </div>
     </div>
+    </PublicShell>
   );
 }
 

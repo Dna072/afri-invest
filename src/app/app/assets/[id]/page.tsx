@@ -29,7 +29,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
           </div>
         </div>
       </div>
-      <div className="mt-4 rounded-3xl bg-card p-4">
+      <div className="mt-4 rounded-xl bg-card p-4">
         <PortfolioChart data={chart} />
       </div>
       <div className="mt-6 grid gap-3 text-sm md:grid-cols-2">
@@ -71,7 +71,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-card px-4 py-3">
+    <div className="rounded-xl bg-card px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="font-medium">{value}</p>
     </div>

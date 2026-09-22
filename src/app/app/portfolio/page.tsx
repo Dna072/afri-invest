@@ -12,7 +12,7 @@ export default async function PortfolioPage() {
   const chart = portfolio.history.find((h) => h.range === "1Y")?.values ?? [];
   return (
     <AppShell title="Portfolio">
-      <div className="rounded-[2rem] bg-card p-6">
+      <div className="rounded-[1.25rem] bg-card p-6">
         <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Ghana portfolio</p>
         <MoneyText amount={portfolio.summary.total.toFixed()} currency="GHS" size="xl" />
         <div className="mt-2 flex gap-4 text-sm">

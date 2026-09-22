@@ -7,7 +7,7 @@ export function WaitlistForm() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   if (done) {
-    return <p className="rounded-2xl bg-card p-6">You’re on the early access list. We’ll only use this for product updates.</p>;
+    return <p className="rounded-xl bg-card p-6">You’re on the early access list. We’ll only use this for product updates.</p>;
   }
   return (
     <form
@@ -33,15 +33,15 @@ export function WaitlistForm() {
         setDone(true);
       }}
     >
-      <input name="email" type="email" required placeholder="Email" className="min-h-12 rounded-2xl border bg-card px-4" />
-      <input name="country" required placeholder="Nationality / home country" className="min-h-12 rounded-2xl border bg-card px-4" />
-      <input name="countryOfResidence" required placeholder="Country of residence" className="min-h-12 rounded-2xl border bg-card px-4" />
-      <select name="investorType" className="min-h-12 rounded-2xl border bg-card px-4">
+      <input name="email" type="email" required placeholder="Email" className="field" />
+      <input name="country" required placeholder="Nationality / home country" className="field" />
+      <input name="countryOfResidence" required placeholder="Country of residence" className="field" />
+      <select name="investorType" className="field">
         <option value="diaspora">Diaspora</option>
         <option value="resident">Resident</option>
         <option value="institution">Institution</option>
       </select>
-      <input name="marketsInterested" defaultValue="Ghana" placeholder="Markets (comma separated)" className="min-h-12 rounded-2xl border bg-card px-4" />
+      <input name="marketsInterested" defaultValue="Ghana" placeholder="Markets (comma separated)" className="field" />
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <Button type="submit">Join the waitlist</Button>
     </form>

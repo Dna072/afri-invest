@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, Home, LineChart, User, Wallet } from "lucide-react";
+import { BrandMark } from "@/components/brand/mark";
 import { cn } from "@/lib/cn";
 
 const items = [
@@ -44,11 +45,11 @@ export function BottomNav() {
 export function SideNav() {
   const pathname = usePathname();
   return (
-    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 border-r border-border bg-card/70 p-6 md:block">
-      <Link href="/app" className="font-display text-2xl">
-        Africa Invest
+    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 border-r border-border bg-card/80 p-6 md:block">
+      <Link href="/app" className="block">
+        <BrandMark />
       </Link>
-      <p className="mt-1 text-xs text-muted-foreground">Invest in Africa from anywhere.</p>
+      <p className="mt-2 text-xs text-muted-foreground">Invest in Africa from anywhere.</p>
       <ul className="mt-8 space-y-1">
         {items.map((item) => {
           const active = item.href === "/app" ? pathname === "/app" : pathname.startsWith(item.href);
@@ -58,7 +59,7 @@ export function SideNav() {
               <Link
                 href={item.href}
                 className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-2xl px-3 text-sm",
+                  "flex min-h-11 items-center gap-3 rounded-[10px] px-3 text-sm transition",
                   active ? "bg-primary text-primary-foreground" : "hover:bg-muted",
                 )}
               >

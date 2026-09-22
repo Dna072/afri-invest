@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree, Fraunces, IBM_Plex_Mono } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const figtree = Figtree({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-figtree",
+  variable: "--font-jakarta",
 });
 
 const fraunces = Fraunces({
@@ -36,13 +36,13 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#1a4336",
+  themeColor: "#12382c",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${figtree.variable} ${fraunces.variable} ${ibm.variable} antialiased paper`}>{children}</body>
+      <body className={`${jakarta.variable} ${fraunces.variable} ${ibm.variable} antialiased paper`}>{children}</body>
     </html>
   );
 }

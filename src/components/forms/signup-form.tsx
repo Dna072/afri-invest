@@ -33,31 +33,31 @@ export function SignupForm() {
     >
       <label className="block text-sm">
         First name
-        <input name="firstName" required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="firstName" required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Last name
-        <input name="lastName" required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="lastName" required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Email
-        <input name="email" type="email" required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="email" type="email" required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Password
-        <input name="password" type="password" minLength={10} required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="password" type="password" minLength={10} required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Country of residence
-        <input name="countryOfResidence" defaultValue="Sweden" required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="countryOfResidence" defaultValue="Sweden" required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Nationality
-        <input name="nationality" defaultValue="Ghana" required className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4" />
+        <input name="nationality" defaultValue="Ghana" required className="field mt-1" />
       </label>
       <label className="block text-sm">
         Primary currency
-        <select name="primaryCurrency" defaultValue="SEK" className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-4">
+        <select name="primaryCurrency" defaultValue="SEK" className="field mt-1">
           {["SEK", "GHS", "GBP", "EUR", "USD", "NGN"].map((c) => (
             <option key={c}>{c}</option>
           ))}
