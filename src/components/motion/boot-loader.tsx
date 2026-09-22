@@ -14,7 +14,8 @@ export function BootLoader() {
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
-    if (window.sessionStorage.getItem(BOOT_KEY) || navigator.webdriver) {
+    const force = new URLSearchParams(window.location.search).has("boot");
+    if (!force && (window.sessionStorage.getItem(BOOT_KEY) || navigator.webdriver)) {
       setVisible(false);
       return;
     }
