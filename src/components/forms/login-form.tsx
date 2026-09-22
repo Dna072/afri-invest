@@ -51,7 +51,7 @@ export function LoginForm() {
         <label className="block text-sm">
           Email
           <input
-            className="mt-1 min-h-12 w-full rounded-2xl border border-input bg-card px-4"
+            className="field mt-1"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
@@ -62,7 +62,7 @@ export function LoginForm() {
         <label className="block text-sm">
           Password
           <input
-            className="mt-1 min-h-12 w-full rounded-2xl border border-input bg-card px-4"
+            className="field mt-1"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
@@ -83,7 +83,7 @@ export function LoginForm() {
               key={p.key}
               type="button"
               onClick={() => void submit({ personaKey: p.key })}
-              className="focus-ring rounded-2xl border border-border bg-card px-4 py-3 text-left"
+              className="focus-ring lift w-full rounded-xl border border-border bg-card px-4 py-3 text-left"
             >
               <p className="font-medium">{p.name}</p>
               <p className="text-xs text-muted-foreground">{p.detail}</p>

@@ -1,16 +1,21 @@
 import Link from "next/link";
+import { PublicShell } from "@/components/chrome/public-shell";
+import { Reveal } from "@/components/motion/reveal";
 import { BusinessModel } from "@/components/investor/business-model";
 
 export const metadata = { title: "Investor demo" };
 
 export default function InvestorDemoPage() {
   return (
+    <PublicShell>
     <div className="mx-auto max-w-5xl px-4 py-10">
-      <p className="text-xs uppercase tracking-[0.25em]">Africa Invest</p>
+      <Reveal>
+      <p className="eyebrow">Product tour</p>
       <h1 className="mt-2 font-display text-5xl">The product, in one sitting.</h1>
       <p className="mt-4 max-w-2xl text-muted-foreground">
         This is a guided walkthrough for prospective investors. It is the product, not a slide deck. Sandbox data throughout.
       </p>
+      </Reveal>
       <ol className="mt-10 space-y-8">
         <Step n="01" title="Problem">
           Africans at home and abroad lack a single, trustworthy way to invest across African public markets. Diaspora capital often sits in European current accounts while Ghanaian (and later Nigerian, Kenyan, South African) markets remain operationally distant.
@@ -44,13 +49,14 @@ export default function InvestorDemoPage() {
         <BusinessModel />
       </div>
     </div>
+    </PublicShell>
   );
 }
 
 function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
     <li className="grid gap-2 md:grid-cols-[5rem_1fr]">
-      <span className="font-display text-3xl text-accent-foreground">{n}</span>
+      <span className="font-display text-3xl text-accent">{n}</span>
       <div>
         <h2 className="font-display text-3xl">{title}</h2>
         <p className="mt-2 text-muted-foreground">{children}</p>

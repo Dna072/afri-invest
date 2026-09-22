@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { AppShell } from "@/components/chrome/app-shell";
 import { PortfolioChart } from "@/components/charts/portfolio-chart";
+import { StockRow } from "@/components/markets/stock-row";
 import { MoneyText, PriceChange, SandboxMark } from "@/components/ui/money";
 import { EmptyState } from "@/components/ui/states";
+import { getAccraClock } from "@/lib/accra";
 import { prisma } from "@/lib/db";
+import { formatMoney } from "@/lib/money";
 import { requireUser } from "@/services/auth";
 import { getCustomerAccount } from "@/services/accounts";
 import { getPortfolio } from "@/services/portfolio";
 import type { CurrencyCode } from "@/types/enums";
 
 function greeting() {
-  const h = new Date().getHours();
+  const h = getAccraClock().hour;
   if (h < 12) return "Good morning";
   if (h < 18) return "Good afternoon";
   return "Good evening";
@@ -35,7 +38,7 @@ export default async function HomePage() {
 
   return (
     <AppShell title={`${greeting()}, ${user.firstName}`}>
-      <section className="rounded-[2rem] bg-primary p-6 text-primary-foreground md:p-8">
+      <section className="rounded-[1.25rem] bg-[color:var(--navy-card)] p-6 text-primary-foreground md:p-8">
         <div className="flex items-center justify-between">
           <p className="text-xs uppercase tracking-[0.2em] text-accent">Portfolio</p>
           <SandboxMark />
@@ -59,7 +62,7 @@ export default async function HomePage() {
           ["/app/fx", "Convert"],
           ["/app/auto-invest", "Auto Invest"],
         ].map(([href, label]) => (
-          <Link key={href} href={href} className="rounded-2xl bg-card px-4 py-4 text-center text-sm font-medium shadow-[var(--shadow-sm)]">
+          <Link key={href} href={href} className="lift rounded-xl bg-card px-4 py-4 text-center text-sm font-medium">
             {label}
           </Link>
         ))}
@@ -75,16 +78,14 @@ export default async function HomePage() {
           <ul className="space-y-2">
             {portfolio.summary.holdings.slice(0, 5).map((h) => (
               <li key={h.assetId}>
-                <Link href={`/app/assets/${h.assetId}`} className="flex items-center justify-between rounded-2xl bg-card px-4 py-3">
-                  <div>
-                    <p className="font-medium">{h.name}</p>
-                    <p className="text-xs text-muted-foreground">{h.symbol} · {h.quantity} units</p>
-                  </div>
-                  <div className="text-right">
-                    <MoneyText amount={h.marketValue.toFixed()} currency={h.currency} />
-                    <div><PriceChange value={h.returnPercent} /></div>
-                  </div>
-                </Link>
+                <StockRow
+                  href={`/app/assets/${h.assetId}`}
+                  symbol={h.symbol}
+                  name={h.name}
+                  subtitle={`${h.symbol} · ${h.quantity} units`}
+                  price={formatMoney(h.marketValue.toFixed(), h.currency)}
+                  change={h.returnPercent}
+                />
               </li>
             ))}
           </ul>
@@ -97,9 +98,15 @@ export default async function HomePage() {
         ) : (
           <ul className="mt-3 space-y-2">
             {watchlist.map((w) => (
-              <li key={w.id} className="flex justify-between rounded-2xl bg-card px-4 py-3">
-                <span>{w.asset.name}</span>
-                <MoneyText amount={w.asset.price} currency={w.asset.currency} />
+              <li key={w.id}>
+                <StockRow
+                  href={`/app/assets/${w.asset.id}`}
+                  symbol={w.asset.symbol}
+                  name={w.asset.name}
+                  subtitle={`${w.asset.symbol} · watchlist`}
+                  price={formatMoney(w.asset.price, w.asset.currency)}
+                  change={w.asset.changePercent}
+                />
               </li>
             ))}
           </ul>
@@ -110,7 +117,7 @@ export default async function HomePage() {
           <h2 className="font-display text-2xl">Upcoming dividends</h2>
           <ul className="mt-3 space-y-2">
             {dividends.map((d) => (
-              <li key={d.id} className="rounded-2xl bg-card px-4 py-3 text-sm">
+              <li key={d.id} className="rounded-xl bg-card px-4 py-3 text-sm">
                 {d.asset.name} · {d.currency} {d.netAmount} · {d.status}
               </li>
             ))}
@@ -118,20 +125,20 @@ export default async function HomePage() {
         </div>
         <div>
           <h2 className="font-display text-2xl">Recent activity</h2>
-          <ul className="mt-3 space-y-2">
-            {activity.map((t) => (
-              <li key={t.id} className="rounded-2xl bg-card px-4 py-3 text-sm">
-                {t.description} · {t.currency} {t.amount}
-              </li>
-            ))}
-          </ul>
+        <ul className="mt-3 space-y-2">
+          {activity.map((t) => (
+            <li key={t.id} className="lift rounded-xl bg-card px-4 py-3 text-sm">
+              {t.description} · {t.currency} {t.amount}
+            </li>
+          ))}
+        </ul>
         </div>
       </section>
       <section className="mt-8">
         <h2 className="font-display text-2xl">Learning</h2>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {articles.map((a) => (
-            <Link key={a.id} href={`/app/education/${a.slug}`} className="rounded-2xl bg-card p-4">
+            <Link key={a.id} href={`/app/education/${a.slug}`} className="lift block rounded-xl bg-card p-4">
               <p className="text-xs text-muted-foreground">{a.category} · {a.readMinutes} min</p>
               <p className="mt-1 font-medium">{a.title}</p>
             </Link>

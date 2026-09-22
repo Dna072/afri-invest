@@ -20,14 +20,24 @@ export function MoneyText({
   );
 }
 
-export function PriceChange({ value, className }: { value: string | number; className?: string }) {
+export function PriceChange({
+  value,
+  className,
+  variant = "text",
+}: {
+  value: string | number;
+  className?: string;
+  variant?: "text" | "pill";
+}) {
   const n = Number(value);
   const positive = n >= 0;
   return (
     <span
       className={cn(
         "tabular text-sm font-medium",
+        variant === "pill" && "inline-flex rounded-full px-2 py-0.5 text-xs",
         positive ? "text-success" : "text-destructive",
+        variant === "pill" && (positive ? "bg-success/10" : "bg-destructive/10"),
         className,
       )}
     >

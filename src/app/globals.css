@@ -1,33 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3eee3;
+  --background: #f4f1ea;
   --foreground: #12241c;
-  --card: #fffaf1;
+  --card: #fffcf6;
   --card-foreground: #12241c;
-  --muted: #e8dfcf;
-  --muted-foreground: #5c6b62;
-  --primary: #1a4336;
-  --primary-foreground: #f6f1e6;
-  --secondary: #d9c9a3;
-  --secondary-foreground: #1a4336;
-  --accent: #c4a15b;
-  --accent-foreground: #1a2e24;
-  --terracotta: #c45c3e;
+  --muted: #ebe4d6;
+  --muted-foreground: #5b675f;
+  --primary: #12382c;
+  --primary-foreground: #f7f2e6;
+  --secondary: #e4d6b4;
+  --secondary-foreground: #12382c;
+  --accent: #c9a24a;
+  --accent-foreground: #1a2a22;
+  --terracotta: #b55238;
   --ocean: #1d5d68;
-  --destructive: #9b3a2f;
-  --success: #1f7a4d;
+  --destructive: #b42318;
+  --success: #0f7a45;
   --warning: #c47a2c;
-  --border: #ddd1ba;
-  --ring: #1a4336;
-  --input: #ddd1ba;
-  --radius: 1.1rem;
-  --shadow: 0 10px 40px rgba(18, 36, 28, 0.08);
-  --shadow-sm: 0 1px 2px rgba(18, 36, 28, 0.06);
+  --border: #ddd4c2;
+  --ring: #12382c;
+  --input: #ddd4c2;
+  --navy-card: #0d241c;
+  --ghana-green: #006b3f;
+  --ghana-gold: #fcd116;
+  --ghana-red: #ce1126;
+  --radius: 0.75rem;
+  --shadow: 0 2px 8px rgba(18, 36, 28, 0.06);
+  --shadow-hover: 0 10px 28px rgba(18, 36, 28, 0.12);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark {
-  --background: #0c1410;
+  --background: #0b1410;
   --foreground: #f3ede0;
   --card: #141c18;
   --card-foreground: #f3ede0;
@@ -42,6 +47,7 @@
   --border: #2a3831;
   --ring: #d7b36a;
   --input: #2a3831;
+  --navy-card: #0a1a14;
 }
 
 @theme inline {
@@ -65,13 +71,14 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
   --color-input: var(--input);
-  --font-sans: var(--font-figtree);
+  --color-navy-card: var(--navy-card);
+  --font-sans: var(--font-jakarta);
   --font-display: var(--font-fraunces);
   --font-mono: var(--font-ibm);
-  --radius-sm: 0.6rem;
+  --radius-sm: 0.5rem;
   --radius-md: var(--radius);
-  --radius-lg: 1.5rem;
-  --radius-xl: 2rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 }
 
 * {
@@ -85,7 +92,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   min-height: 100dvh;
 }
 
@@ -99,11 +106,120 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* Warm paper + faint Sankofa-like rings — Ghana without a flag dump */
 .paper {
   background:
-    radial-gradient(1200px 400px at 10% -10%, rgba(196, 161, 91, 0.18), transparent 50%),
-    radial-gradient(900px 300px at 100% 0%, rgba(196, 92, 62, 0.08), transparent 40%),
+    radial-gradient(900px 380px at 8% -8%, rgba(201, 162, 74, 0.16), transparent 52%),
+    radial-gradient(720px 280px at 100% 0%, rgba(181, 82, 56, 0.06), transparent 42%),
+    radial-gradient(circle at 92% 88%, rgba(0, 107, 63, 0.05), transparent 28%),
     var(--background);
+}
+
+.kente-ribbon {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--ghana-green) 0 33.33%,
+    var(--ghana-gold) 33.33% 66.66%,
+    var(--ghana-red) 66.66% 100%
+  );
+}
+
+.lift {
+  transition: transform 250ms var(--ease), box-shadow 250ms var(--ease);
+  box-shadow: var(--shadow);
+}
+
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.field {
+  min-height: 3rem;
+  width: 100%;
+  border-radius: 0.65rem;
+  border: 1px solid var(--input);
+  background: var(--card);
+  padding: 0 1rem;
+  transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(18, 56, 44, 0.12);
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.ticker-wrap {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 88%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 48s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.faq-item {
+  border-radius: 0.85rem;
+  background: var(--card);
+  padding: 1rem 1.15rem;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item p {
+  margin-top: 0.65rem;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.7s var(--ease) both;
 }
 
 .focus-ring:focus-visible {
@@ -115,7 +231,18 @@ body {
   html {
     scroll-behavior: auto;
   }
-  *, *::before, *::after {
+  .ticker-track {
+    animation: none;
+  }
+  .lift:hover {
+    transform: none;
+  }
+  .rise-in {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
