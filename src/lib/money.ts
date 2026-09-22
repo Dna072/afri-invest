@@ -123,17 +123,26 @@ export function currencyDecimals(code: string) {
 export function formatMoney(amount: Decimal.Value, currency: string, locale = "en-GB") {
   const decimals = currencyDecimals(currency);
   const value = new Decimal(amount).toFixed(decimals);
+  const resolvedLocale = currency === "GHS" ? "en-GH" : locale;
   try {
-    return new Intl.NumberFormat(locale, {
+    return new Intl.NumberFormat(resolvedLocale, {
       style: "currency",
       currency,
-      currencyDisplay: "code",
+      currencyDisplay: currency === "GHS" ? "narrowSymbol" : "code",
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals,
     }).format(Number(value));
   } catch {
     return `${currency} ${value}`;
   }
+}
+
+export function compactAmount(value: string | number) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return String(value);
+  if (Math.abs(n) >= 1_000_000_000) return `${(n / 1_000_000_000).toFixed(1)}bn`;
+  if (Math.abs(n) >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}m`;
+  return n.toLocaleString("en-GB");
 }
 
 export function formatSignedPercent(value: Decimal.Value) {

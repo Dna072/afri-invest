@@ -6,6 +6,7 @@ import { SessionBadge } from "@/components/markets/session-badge";
 import { SymbolAvatar } from "@/components/markets/symbol-avatar";
 import { MoneyText, PriceChange, SandboxMark } from "@/components/ui/money";
 import { cn } from "@/lib/cn";
+import { compactAmount } from "@/lib/money";
 
 const RANGES = [
   { id: "1W", take: 7 },
@@ -49,7 +50,7 @@ export function QuotePanel({
     ["Prev close", asset.previousClose],
     ["Last", asset.price],
     asset.week52Low && asset.week52High ? ["52-week", `${asset.week52Low} – ${asset.week52High}`] : null,
-    asset.marketCap ? ["Market cap", asset.marketCap] : null,
+    asset.marketCap ? ["Market cap", compactAmount(asset.marketCap)] : null,
     asset.dividendYield ? ["Div. yield", `${asset.dividendYield}%`] : null,
     asset.sector ? ["Sector", asset.sector] : null,
   ].filter(Boolean) as Array<[string, string]>;
