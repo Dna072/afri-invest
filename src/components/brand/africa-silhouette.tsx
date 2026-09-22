@@ -1,3 +1,4 @@
+/** Country-level silhouette for maps only. The brand mark is in logo-mark.tsx. */
 import { AFRICA_CLIP_PATH, AFRICA_COUNTRIES, AFRICA_VIEWBOX, countryByIso2 } from "@/data/africa";
 import { cn } from "@/lib/cn";
 
