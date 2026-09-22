@@ -81,7 +81,7 @@ export function BrandBootScreen({
       >
         <AfricaLogoMark stage={stage} className="h-full w-full" />
       </motion.div>
-      <BrandWordmark stacked className="mt-6 text-3xl md:text-4xl" />
+      <BrandWordmark className="mt-6 text-3xl md:text-4xl" />
       <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{BRAND_TAGLINE}</p>
       <p className="mt-8 text-sm font-medium">{label}</p>
       <div className="mt-3 flex w-full max-w-xs items-center gap-3">
@@ -93,17 +93,22 @@ export function BrandBootScreen({
         </div>
         <span className="w-10 text-right text-xs tabular text-muted-foreground">{progress}%</span>
       </div>
-      <ol className="mt-10 grid w-full grid-cols-4 gap-2 text-[11px]">
+      <ol className="relative mt-10 grid w-full grid-cols-4 gap-2 text-[11px]">
+        <span
+          className="absolute left-[12%] right-[12%] top-3 h-px bg-[linear-gradient(90deg,var(--ghana-green),var(--ghana-gold),var(--ghana-red))]"
+          aria-hidden
+        />
         {BOOT_STAGES.map((item) => {
           const active = item.id === stage;
           const done = item.id < stage;
           return (
             <li key={item.id} className={active ? "text-foreground" : "text-muted-foreground"}>
               <span
-                className="mx-auto mb-2 flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-semibold"
+                className="relative z-10 mx-auto mb-2 flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-semibold"
                 style={{
-                  background: done || active ? "linear-gradient(135deg, var(--ghana-green), var(--ghana-gold), var(--ghana-red))" : "var(--muted)",
+                  background: done || active ? "linear-gradient(135deg, var(--ghana-green), var(--ghana-gold), var(--ghana-red))" : "var(--card)",
                   color: done || active ? "#fff" : "inherit",
+                  boxShadow: "0 0 0 4px var(--background)",
                 }}
               >
                 {item.id}
