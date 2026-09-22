@@ -52,8 +52,8 @@ export function AfricaSpinner({ className, size = "md" }: { className?: string; 
             key={country.iso2}
             d={country.path}
             fill={country.iso2 === "GH" ? "color-mix(in srgb, var(--ghana-gold) 55%, transparent)" : "none"}
-            stroke={country.iso2 === "GH" ? "var(--ghana-gold)" : "color-mix(in srgb, var(--foreground) 14%, transparent)"}
-            strokeWidth={country.iso2 === "GH" ? 1.6 : 0.45}
+            stroke={country.iso2 === "GH" ? "var(--ghana-gold)" : "color-mix(in srgb, var(--foreground) 38%, transparent)"}
+            strokeWidth={country.iso2 === "GH" ? 2.4 : 1.05}
             strokeLinejoin="round"
           />
         ))}
