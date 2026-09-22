@@ -390,6 +390,10 @@ body {
   transition: transform 0.65s var(--ease);
 }
 
+.africa-logo-breathe {
+  animation: logo-breathe 1.8s ease-in-out infinite;
+}
+
 .africa-ring {
   animation: spin 1.8s linear infinite;
 }
@@ -452,6 +456,18 @@ body {
   }
 }
 
+@keyframes logo-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes fill-africa {
   from {
     transform: translateY(105%);
@@ -503,6 +519,7 @@ body {
   }
   .ticker-track,
   .africa-ring,
+  .africa-logo-breathe,
   .africa-liquid,
   .africa-trace,
   .ghana-pulse,

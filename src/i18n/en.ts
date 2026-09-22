@@ -1,6 +1,6 @@
 export const messages = {
   brand: "Africa Invest",
-  tagline: "Invest in African stocks from one account.",
+  tagline: "Invest today. A brighter Africa tomorrow.",
   subhead:
     "Buy stocks and ETFs on African exchanges, and later global stocks. We are piloting in Ghana first. KYC is required for every investor.",
   nav: {
