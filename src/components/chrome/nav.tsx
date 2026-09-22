@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, Home, LineChart, User, Wallet } from "lucide-react";
+import { AccraClock } from "@/components/brand/accra-clock";
 import { BrandMark } from "@/components/brand/mark";
 import { cn } from "@/lib/cn";
 
@@ -45,7 +46,7 @@ export function BottomNav() {
 export function SideNav() {
   const pathname = usePathname();
   return (
-    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 border-r border-border bg-card/80 p-6 md:block">
+    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r border-border bg-card/80 p-6 md:flex">
       <Link href="/app" className="block">
         <BrandMark />
       </Link>
@@ -70,6 +71,9 @@ export function SideNav() {
           );
         })}
       </ul>
+      <div className="mt-auto pt-8">
+        <AccraClock compact />
+      </div>
     </aside>
   );
 }

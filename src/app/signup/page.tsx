@@ -8,7 +8,7 @@ export default function SignupPage() {
   return (
     <PublicShell>
       <div className="mx-auto flex max-w-md flex-col px-4 py-14">
-        <p className="eyebrow">Sandbox onboarding</p>
+        <p className="eyebrow">From Accra · sandbox</p>
         <h1 className="mt-2 font-display text-4xl">Open an account</h1>
         <p className="mt-2 text-sm text-muted-foreground">KYC is mocked. No real identity documents are stored.</p>
         <div className="mt-8">

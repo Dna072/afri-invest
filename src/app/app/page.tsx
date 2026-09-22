@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { AppShell } from "@/components/chrome/app-shell";
 import { PortfolioChart } from "@/components/charts/portfolio-chart";
+import { StockRow } from "@/components/markets/stock-row";
 import { MoneyText, PriceChange, SandboxMark } from "@/components/ui/money";
 import { EmptyState } from "@/components/ui/states";
+import { getAccraClock } from "@/lib/accra";
 import { prisma } from "@/lib/db";
+import { formatMoney } from "@/lib/money";
 import { requireUser } from "@/services/auth";
 import { getCustomerAccount } from "@/services/accounts";
 import { getPortfolio } from "@/services/portfolio";
 import type { CurrencyCode } from "@/types/enums";
 
 function greeting() {
-  const h = new Date().getHours();
+  const h = getAccraClock().hour;
   if (h < 12) return "Good morning";
   if (h < 18) return "Good afternoon";
   return "Good evening";
@@ -75,16 +78,14 @@ export default async function HomePage() {
           <ul className="space-y-2">
             {portfolio.summary.holdings.slice(0, 5).map((h) => (
               <li key={h.assetId}>
-                <Link href={`/app/assets/${h.assetId}`} className="lift flex items-center justify-between rounded-xl bg-card px-4 py-3">
-                  <div>
-                    <p className="font-medium">{h.name}</p>
-                    <p className="text-xs text-muted-foreground">{h.symbol} · {h.quantity} units</p>
-                  </div>
-                  <div className="text-right">
-                    <MoneyText amount={h.marketValue.toFixed()} currency={h.currency} />
-                    <div><PriceChange value={h.returnPercent} /></div>
-                  </div>
-                </Link>
+                <StockRow
+                  href={`/app/assets/${h.assetId}`}
+                  symbol={h.symbol}
+                  name={h.name}
+                  subtitle={`${h.symbol} · ${h.quantity} units`}
+                  price={formatMoney(h.marketValue.toFixed(), h.currency)}
+                  change={h.returnPercent}
+                />
               </li>
             ))}
           </ul>
@@ -97,9 +98,15 @@ export default async function HomePage() {
         ) : (
           <ul className="mt-3 space-y-2">
             {watchlist.map((w) => (
-              <li key={w.id} className="lift flex justify-between rounded-xl bg-card px-4 py-3">
-                <span>{w.asset.name}</span>
-                <MoneyText amount={w.asset.price} currency={w.asset.currency} />
+              <li key={w.id}>
+                <StockRow
+                  href={`/app/assets/${w.asset.id}`}
+                  symbol={w.asset.symbol}
+                  name={w.asset.name}
+                  subtitle={`${w.asset.symbol} · watchlist`}
+                  price={formatMoney(w.asset.price, w.asset.currency)}
+                  change={w.asset.changePercent}
+                />
               </li>
             ))}
           </ul>
@@ -118,13 +125,13 @@ export default async function HomePage() {
         </div>
         <div>
           <h2 className="font-display text-2xl">Recent activity</h2>
-          <ul className="mt-3 space-y-2">
-            {activity.map((t) => (
-              <li key={t.id} className="rounded-xl bg-card px-4 py-3 text-sm">
-                {t.description} · {t.currency} {t.amount}
-              </li>
-            ))}
-          </ul>
+        <ul className="mt-3 space-y-2">
+          {activity.map((t) => (
+            <li key={t.id} className="lift rounded-xl bg-card px-4 py-3 text-sm">
+              {t.description} · {t.currency} {t.amount}
+            </li>
+          ))}
+        </ul>
         </div>
       </section>
       <section className="mt-8">

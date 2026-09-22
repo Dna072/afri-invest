@@ -42,7 +42,7 @@ export default async function OnboardingPage() {
         {questions.map(([name, label, opts]) => (
           <label key={name} className="block text-sm">
             {label}
-            <select name={name} className="mt-1 min-h-12 w-full rounded-2xl border bg-card px-3">
+            <select name={name} className="field mt-1">
               {opts.map((o) => (
                 <option key={o}>{o}</option>
               ))}

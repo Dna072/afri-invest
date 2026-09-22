@@ -1,16 +1,24 @@
 import Link from "next/link";
+import { AccraClock } from "@/components/brand/accra-clock";
 import { BrandMark } from "@/components/brand/mark";
+import { Button } from "@/components/ui/button";
 
 export function PublicFooter() {
   return (
     <footer className="border-t border-border bg-card">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-[1.6fr_1fr_1fr]">
         <div>
           <BrandMark />
           <p className="mt-3 max-w-sm text-sm text-muted-foreground">
-            One account for Africans everywhere. Ghana first. Sandbox market data. Not a live brokerage.
+            One account for Africans everywhere. Built in the Ghana corridor first. Sandbox market data. Not a live
+            brokerage.
           </p>
-          <p className="mt-4 text-xs text-muted-foreground">From Accra · hours in Africa/Accra</p>
+          <div className="mt-4">
+            <AccraClock />
+          </div>
+          <Button asChild size="sm" className="mt-5">
+            <Link href="/signup">Open a sandbox account</Link>
+          </Button>
         </div>
         <div className="text-sm">
           <p className="eyebrow">Product</p>
