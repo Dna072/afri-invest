@@ -46,7 +46,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
         chart={chart}
       />
       {asset.bondTerms ? (
-        <p className="mt-4 text-sm text-muted-foreground">Indicative yield {asset.bondTerms.yieldPercent}% · sandbox</p>
+        <p className="mt-4 text-sm text-muted-foreground">Indicative yield {asset.bondTerms.yieldPercent}%</p>
       ) : null}
       <div className="sticky bottom-20 mt-8 flex gap-3 md:bottom-6">
         {tradable ? (

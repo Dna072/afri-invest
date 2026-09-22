@@ -6,7 +6,7 @@ const tickers = ASSET_SEED.filter((a) => a.assetType === "equity").slice(0, 16);
 export function MarketTicker() {
   const loop = [...tickers, ...tickers];
   return (
-    <div className="relative border-b border-border bg-[color:var(--ticker)]" aria-label="Sandbox market tape">
+    <div className="relative border-b border-border bg-[color:var(--ticker)]" aria-label="Market tape">
       <div className="ticker-wrap pr-28 sm:pr-44">
         <div className="ticker-track py-2">
           {loop.map((asset, i) => {
@@ -24,7 +24,7 @@ export function MarketTicker() {
                   {asset.changePercent}%
                 </span>
                 <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium tracking-wide text-muted-foreground">
-                  {asset.marketId === "ghana" ? "GSE · SANDBOX" : "PREVIEW"}
+                  {asset.marketId === "ghana" ? "GSE" : asset.marketId === "global" ? "GLOBAL" : "SOON"}
                 </span>
               </span>
             );

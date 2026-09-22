@@ -20,7 +20,7 @@ const STATUS_FILL: Record<MarketRollout, string> = {
   pilot: "var(--ghana-green)",
   coming_soon: "color-mix(in srgb, var(--ghana-gold) 70%, #8a6b14)",
   planned: "color-mix(in srgb, var(--primary) 50%, #2c4036)",
-  watch: "color-mix(in srgb, #3a4c44 80%, black)",
+  watch: "color-mix(in srgb, #6d7f74 55%, #102018)",
 };
 
 export function AfricaReportMap({ usersByResidence }: Props) {
@@ -45,8 +45,8 @@ export function AfricaReportMap({ usersByResidence }: Props) {
               key={c.iso2}
               d={c.path}
               fill={iso === c.iso2 ? "var(--ghana-gold)" : STATUS_FILL[c.status]}
-              stroke="color-mix(in srgb, var(--on-navy) 20%, transparent)"
-              strokeWidth={c.iso2 === "GH" ? 1.5 : 0.4}
+              stroke="color-mix(in srgb, var(--on-navy) 32%, transparent)"
+              strokeWidth={c.iso2 === "GH" ? 1.6 : 0.55}
               className="cursor-pointer"
               onClick={() => setIso(c.iso2)}
             >
