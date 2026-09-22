@@ -1,46 +1,94 @@
 "use client";
 
-const countries: Array<{ id: string; name: string; x: number; y: number; status: string }> = [
-  { id: "ghana", name: "Ghana", x: 28, y: 48, status: "Prototype / Pilot" },
-  { id: "nigeria", name: "Nigeria", x: 36, y: 50, status: "Coming soon" },
-  { id: "kenya", name: "Kenya", x: 62, y: 58, status: "Coming soon" },
-  { id: "south_africa", name: "South Africa", x: 52, y: 86, status: "Coming soon" },
-  { id: "brvm", name: "BRVM", x: 22, y: 52, status: "Coming soon" },
-];
+import { useMemo, useState } from "react";
+import {
+  AFRICA_COUNTRIES,
+  AFRICA_VIEWBOX,
+  exchangeNote,
+  formatPopulation,
+  marketStatusLabel,
+  type AfricaCountry,
+} from "@/data/africa";
+import { cn } from "@/lib/cn";
 
-export function AfricaMap({ onSelect }: { onSelect?: (id: string) => void }) {
+const FOCUS = ["GH", "NG", "KE", "ZA", "CI"] as const;
+
+function fillFor(country: AfricaCountry, selected?: string) {
+  if (country.iso2 === selected) return "var(--ghana-gold)";
+  if (country.status === "pilot") return "var(--ghana-green)";
+  if (country.status === "coming_soon") return "color-mix(in srgb, var(--accent) 55%, var(--navy-card))";
+  if (country.status === "planned") return "color-mix(in srgb, var(--primary) 42%, var(--navy-card))";
+  return "color-mix(in srgb, var(--navy-card) 55%, #3d5348)";
+}
+
+export function AfricaMap({
+  onSelect,
+  selectedIso,
+}: {
+  onSelect?: (iso2: string) => void;
+  selectedIso?: string;
+}) {
+  const [hover, setHover] = useState<string | null>(null);
+  const [picked, setPicked] = useState(selectedIso ?? "GH");
+  const active = hover ?? selectedIso ?? picked;
+  const country = useMemo(
+    () => AFRICA_COUNTRIES.find((c) => c.iso2 === active) ?? AFRICA_COUNTRIES.find((c) => c.iso2 === "GH"),
+    [active],
+  );
+
   return (
-    <div className="relative overflow-hidden rounded-[1.25rem] bg-[color:var(--navy-card)] text-on-navy">
-      <svg viewBox="0 0 100 100" className="h-72 w-full opacity-90">
-        <ellipse cx="50" cy="52" rx="28" ry="38" fill="color-mix(in srgb, var(--navy-card) 70%, black)" />
-        <path
-          d="M35 20 Q50 12 62 22 Q78 40 70 70 Q55 95 45 88 Q28 70 30 40 Z"
-          fill="color-mix(in srgb, var(--primary) 55%, var(--navy-card))"
-          stroke="var(--accent)"
-          strokeWidth="0.6"
-        />
-        {countries.map((c) => (
-          <g key={c.id}>
-            <circle cx={c.x} cy={c.y} r={c.id === "ghana" ? 3.4 : 2.2} fill={c.id === "ghana" ? "var(--ghana-gold)" : "#f3eee3"}>
-              {c.id === "ghana" ? (
-                <animate attributeName="r" values="3.2;4;3.2" dur="2.4s" repeatCount="indefinite" />
-              ) : null}
-            </circle>
-          </g>
+    <div className="relative overflow-hidden rounded-xl bg-[color:var(--navy-card)] text-on-navy">
+      <svg viewBox={AFRICA_VIEWBOX} className="h-[22rem] w-full md:h-[28rem]" role="img" aria-label="Map of African markets">
+        {AFRICA_COUNTRIES.map((c) => (
+          <path
+            key={c.iso2}
+            d={c.path}
+            fill={fillFor(c, hover ?? selectedIso ?? picked)}
+            stroke="color-mix(in srgb, var(--on-navy) 22%, transparent)"
+            strokeWidth={c.iso2 === "GH" ? 1.4 : 0.45}
+            className="cursor-pointer transition-colors duration-200"
+            onMouseEnter={() => setHover(c.iso2)}
+            onMouseLeave={() => setHover(null)}
+            onClick={() => {
+              setPicked(c.iso2);
+              onSelect?.(c.iso2);
+            }}
+          >
+            <title>{`${c.name} · ${marketStatusLabel(c.status)}`}</title>
+          </path>
         ))}
       </svg>
-      <div className="absolute inset-x-0 bottom-0 grid gap-2 p-4 sm:grid-cols-2">
-        {countries.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => onSelect?.(c.id)}
-            className="rounded-lg bg-black/25 px-3 py-2 text-left text-sm backdrop-blur transition hover:-translate-y-0.5"
-          >
-            <p className="font-medium">{c.name}</p>
-            <p className="text-xs text-on-navy/70">{c.status}</p>
-          </button>
-        ))}
+      {country ? (
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/55 to-transparent p-4">
+          <p className="text-xs uppercase tracking-[0.18em] text-accent">{marketStatusLabel(country.status)}</p>
+          <p className="mt-1 font-display text-2xl">{country.name}</p>
+          <p className="mt-1 text-sm text-on-navy/75">
+            {exchangeNote(country.iso2)} · pop. {formatPopulation(country.population)}
+          </p>
+        </div>
+      ) : null}
+      <div className="grid gap-2 border-t border-white/10 p-4 sm:grid-cols-5">
+        {FOCUS.map((iso) => {
+          const c = AFRICA_COUNTRIES.find((item) => item.iso2 === iso);
+          if (!c) return null;
+          return (
+            <button
+              key={iso}
+              type="button"
+              onClick={() => {
+                setPicked(c.iso2);
+                onSelect?.(c.iso2);
+              }}
+              className={cn(
+                "rounded-lg px-3 py-2 text-left text-sm transition hover:-translate-y-0.5",
+                (hover ?? selectedIso ?? picked) === iso ? "bg-white/20" : "bg-black/25",
+              )}
+            >
+              <p className="font-medium">{c.name}</p>
+              <p className="text-xs text-on-navy/70">{marketStatusLabel(c.status)}</p>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

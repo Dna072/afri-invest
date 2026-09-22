@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const personas = [
-  { key: "derrick", name: "Derrick", detail: "Ghanaian in Sweden · SEK" },
-  { key: "ama", name: "Ama", detail: "Ghana resident · GHS" },
-  { key: "kofi", name: "Kofi", detail: "Ghanaian in the UK · GBP" },
-  { key: "chinedu", name: "Chinedu", detail: "Nigeria resident · NGN" },
-  { key: "admin", name: "Abena", detail: "Operations admin" },
+  { key: "derrick", name: "Derrick", detail: "Lives in Sweden · buys Ghana stocks" },
+  { key: "ama", name: "Ama", detail: "Lives in Ghana · GHS account" },
+  { key: "kofi", name: "Kofi", detail: "Lives in the UK · GBP account" },
+  { key: "chinedu", name: "Chinedu", detail: "Lives in Nigeria · NGN account" },
+  { key: "admin", name: "Abena", detail: "Operations" },
 ];
 
 export function LoginForm() {
@@ -76,7 +76,7 @@ export function LoginForm() {
         </Button>
       </form>
       <div>
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Demo personas</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Try a demo profile</p>
         <div className="mt-3 grid gap-2">
           {personas.map((p) => (
             <button

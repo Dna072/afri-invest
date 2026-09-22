@@ -29,10 +29,10 @@ export function AccraClock({ className, compact = false }: { className?: string;
         />
       </span>
       {compact ? (
-        <span>Accra {clock.time}</span>
+        <span>GSE {clock.time}</span>
       ) : (
         <span>
-          Accra {clock.time} GMT · {clock.label}
+          GSE {clock.time} GMT · {clock.label}
         </span>
       )}
     </span>

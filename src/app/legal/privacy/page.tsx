@@ -9,9 +9,10 @@ export default function PrivacyPage() {
       <p className="eyebrow">Legal</p>
       <h1 className="mt-2 font-display text-4xl">Privacy</h1>
       <p className="mt-6">
-        The architecture supports consent, purpose limitation, retention, access, export and deletion where legally permitted. Ghana data protection and GDPR concepts are modelled; this page is not a filed privacy notice.
+        We collect the information needed to open an account, complete KYC and determine tax obligations based on your
+        country of residence. You can ask for access, export or deletion where the law allows.
       </p>
-      <p className="mt-4">Demo accounts use entirely fictional personal data. Do not enter real identity documents.</p>
+      <p className="mt-4">Demo accounts use fictional personal data. Do not upload real identity documents.</p>
     </article>
     </PublicShell>
   );

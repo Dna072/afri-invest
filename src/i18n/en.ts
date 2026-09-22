@@ -1,7 +1,8 @@
 export const messages = {
   brand: "Africa Invest",
-  tagline: "Invest in Africa from anywhere.",
-  subhead: "One investment account designed to connect Africans and the global African diaspora with African capital markets.",
+  tagline: "Invest in African stocks from one account.",
+  subhead:
+    "Buy stocks and ETFs on African exchanges, and later global stocks. We are piloting in Ghana first. KYC is required for every investor.",
   nav: {
     home: "Home",
     markets: "Markets",
@@ -10,8 +11,8 @@ export const messages = {
     profile: "Profile",
   },
   cta: {
-    explore: "Explore the Product",
-    waitlist: "Join the Waitlist",
+    explore: "Explore African stocks",
+    waitlist: "Get early access",
     invest: "Invest",
     addMoney: "Add Money",
     convert: "Convert",
@@ -19,13 +20,13 @@ export const messages = {
   },
   empty: {
     investments: "No investments yet.",
-    investmentsHint: "Start building your African portfolio.",
+    investmentsHint: "Start with a Ghana stock or ETF.",
     watchlist: "No watchlist items.",
     watchlistHint: "Keep an eye on companies and markets you're interested in.",
   },
-  risk: "Investment values can rise or fall. You may lose capital. This product is under development and uses sandbox data.",
+  risk: "Investment values can rise or fall. You may lose capital. This product is under development and uses illustrative prices.",
   advice: "Educational information only. This is not personalised investment advice.",
-  sandbox: "Sandbox market data",
+  sandbox: "Illustrative market data",
 } as const;
 
 export function t(path: string) {

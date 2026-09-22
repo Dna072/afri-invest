@@ -24,7 +24,7 @@ export function FundingForm({ currency }: { currency: string }) {
           setError(json.error?.message ?? "Payment could not be started.");
           return;
         }
-        setMessage(`Deposit ${json.data.status}. Your ledger is the source of truth for the new balance.`);
+        setMessage(`Deposit ${json.data.status}. Your available cash has been updated.`);
       }}
     >
       <label className="block text-sm">

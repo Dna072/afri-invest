@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { RESIDENCE_OPTIONS } from "@/data/africa";
 import { Button } from "@/components/ui/button";
 
 export function SignupForm() {
@@ -49,20 +50,34 @@ export function SignupForm() {
       </label>
       <label className="block text-sm">
         Country of residence
-        <input name="countryOfResidence" defaultValue="Sweden" required className="field mt-1" />
+        <select name="countryOfResidence" defaultValue="Ghana" required className="field mt-1">
+          {RESIDENCE_OPTIONS.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+        <span className="mt-1 block text-xs text-muted-foreground">
+          Used for KYC and to determine your tax obligations.
+        </span>
       </label>
       <label className="block text-sm">
         Nationality
-        <input name="nationality" defaultValue="Ghana" required className="field mt-1" />
+        <select name="nationality" defaultValue="Ghana" required className="field mt-1">
+          {RESIDENCE_OPTIONS.map((c) => (
+            <option key={`n-${c}`}>{c}</option>
+          ))}
+        </select>
       </label>
       <label className="block text-sm">
         Primary currency
-        <select name="primaryCurrency" defaultValue="SEK" className="field mt-1">
-          {["SEK", "GHS", "GBP", "EUR", "USD", "NGN"].map((c) => (
+        <select name="primaryCurrency" defaultValue="GHS" className="field mt-1">
+          {["GHS", "USD", "EUR", "GBP", "NGN", "KES", "ZAR", "SEK"].map((c) => (
             <option key={c}>{c}</option>
           ))}
         </select>
       </label>
+      <p className="text-xs text-muted-foreground">
+        Next you will verify your identity. You cannot add money or buy stocks until KYC is complete.
+      </p>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <Button className="w-full" disabled={loading} type="submit">
         {loading ? "Creating…" : "Create account"}

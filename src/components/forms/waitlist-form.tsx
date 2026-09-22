@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { RESIDENCE_OPTIONS } from "@/data/africa";
 import { Button } from "@/components/ui/button";
 
 export function WaitlistForm() {
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   if (done) {
-    return <p className="rounded-xl bg-card p-6">You’re on the early access list. We’ll only use this for product updates.</p>;
+    return <p className="rounded-xl bg-card p-6">You’re on the list. We’ll only use this for product updates.</p>;
   }
   return (
     <form
@@ -34,16 +35,35 @@ export function WaitlistForm() {
       }}
     >
       <input name="email" type="email" required placeholder="Email" className="field" />
-      <input name="country" required placeholder="Nationality / home country" className="field" />
-      <input name="countryOfResidence" required placeholder="Country of residence" className="field" />
+      <label className="text-sm">
+        Nationality
+        <select name="country" required defaultValue="Ghana" className="field mt-1">
+          {RESIDENCE_OPTIONS.map((c) => (
+            <option key={`n-${c}`}>{c}</option>
+          ))}
+        </select>
+      </label>
+      <label className="text-sm">
+        Country of residence
+        <select name="countryOfResidence" required defaultValue="Ghana" className="field mt-1">
+          {RESIDENCE_OPTIONS.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+      </label>
       <select name="investorType" className="field">
-        <option value="diaspora">Diaspora</option>
-        <option value="resident">Resident</option>
+        <option value="resident">I live in Africa</option>
+        <option value="diaspora">I live outside Africa</option>
         <option value="institution">Institution</option>
       </select>
-      <input name="marketsInterested" defaultValue="Ghana" placeholder="Markets (comma separated)" className="field" />
+      <input
+        name="marketsInterested"
+        defaultValue="Ghana, Global"
+        placeholder="Markets you want (Ghana, Nigeria, Global…)"
+        className="field"
+      />
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
-      <Button type="submit">Join the waitlist</Button>
+      <Button type="submit">Get early access</Button>
     </form>
   );
 }

@@ -106,8 +106,8 @@ export function QuotePanel({
             </button>
           ))}
         </div>
-        {sliced.length > 1 ? <PortfolioChart data={sliced} /> : <p className="py-8 text-center text-sm text-muted-foreground">No sandbox series yet.</p>}
-        <p className="mt-2 text-[11px] text-muted-foreground">Sandbox series · not a live chart</p>
+        {sliced.length > 1 ? <PortfolioChart data={sliced} /> : <p className="py-8 text-center text-sm text-muted-foreground">No price history yet.</p>}
+        <p className="mt-2 text-[11px] text-muted-foreground">Illustrative prices · not a live chart</p>
       </div>
 
       <div className="mt-6 border-b border-border">
@@ -136,7 +136,7 @@ export function QuotePanel({
           <div className="space-y-3">
             <p>
               {asset.symbol} is modelled on the {asset.exchangeName}. Status: {asset.marketStatus.replaceAll("_", " ")}.
-              This quote is sandbox data.
+              Prices are illustrative.
             </p>
             <p>{asset.description}</p>
           </div>
@@ -144,7 +144,7 @@ export function QuotePanel({
         {tab === "About" ? <p>{asset.description}</p> : null}
         {tab === "Risk" ? (
           <p>
-            Prices can fall. Currency moves can amplify gains and losses. This listing is educational sandbox data — not a
+            Prices can fall. Currency moves can amplify gains and losses. This listing is educational — not a
             recommendation. Risk band: {asset.riskCategory}.
           </p>
         ) : null}
