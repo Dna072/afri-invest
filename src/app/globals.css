@@ -394,6 +394,11 @@ body {
   animation: logo-breathe 1.8s ease-in-out infinite;
 }
 
+.logo-art {
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
 .logo-bar {
   transform-box: fill-box;
   transform-origin: center bottom;
@@ -415,8 +420,9 @@ body {
 }
 
 .logo-assemble .logo-land,
-.logo-assemble .logo-island {
-  animation: logo-land-in 0.7s var(--ease) both;
+.logo-assemble .logo-island,
+.logo-assemble .logo-art {
+  animation: logo-land-in 0.55s var(--ease) both, logo-reveal 1.35s var(--ease) both;
 }
 
 .logo-assemble .logo-bar-1 {
@@ -437,8 +443,12 @@ body {
 }
 
 .logo-loop .logo-land,
-.logo-loop .logo-island {
+.logo-loop .logo-island,
+.logo-loop .logo-art {
   animation: logo-breathe 2.4s ease-in-out infinite;
+}
+.logo-loop .logo-shine {
+  animation: logo-shine-sweep 2.4s var(--ease) infinite;
 }
 .logo-loop .logo-bar-1 {
   animation: logo-bar-wave 1.7s ease-in-out infinite;
@@ -608,6 +618,26 @@ body {
   }
 }
 
+@keyframes logo-reveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes logo-shine-sweep {
+  from {
+    transform: translateX(-20px);
+    opacity: 0.15;
+  }
+  to {
+    transform: translateX(340px);
+    opacity: 0.85;
+  }
+}
+
 @keyframes logo-bar-wave {
   0%,
   100% {
@@ -678,6 +708,7 @@ body {
   .logo-orbit,
   .logo-assemble .logo-land,
   .logo-assemble .logo-island,
+  .logo-assemble .logo-art,
   .logo-assemble .logo-bar-1,
   .logo-assemble .logo-bar-2,
   .logo-assemble .logo-bar-3,
@@ -685,6 +716,8 @@ body {
   .logo-assemble .logo-head,
   .logo-loop .logo-land,
   .logo-loop .logo-island,
+  .logo-loop .logo-art,
+  .logo-loop .logo-shine,
   .logo-loop .logo-bar-1,
   .logo-loop .logo-bar-2,
   .logo-loop .logo-bar-3,

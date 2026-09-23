@@ -12,6 +12,7 @@ export function BootLoader() {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(true);
   const [elapsed, setElapsed] = useState(0);
+  const [frozen, setFrozen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -19,6 +20,7 @@ export function BootLoader() {
     const freeze = Number(params.get("stage"));
     if (freeze >= 1 && freeze <= 4) {
       setElapsed(elapsedForStage(freeze, BOOT_MS));
+      setFrozen(true);
       return;
     }
     if (!force && (window.sessionStorage.getItem(BOOT_KEY) || navigator.webdriver)) {
@@ -61,7 +63,7 @@ export function BootLoader() {
           transition={{ duration: reduced ? 0.12 : 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="kente-ribbon absolute inset-x-0 top-0" aria-hidden />
-          <BrandBootScreen stage={stage.id} label={stage.label} progress={progress} />
+          <BrandBootScreen stage={stage.id} label={stage.label} progress={progress} frozen={frozen} />
         </motion.div>
       ) : null}
     </AnimatePresence>
@@ -72,10 +74,12 @@ export function BrandBootScreen({
   stage,
   label,
   progress,
+  frozen = false,
 }: {
   stage: BootStageId;
   label: string;
   progress: number;
+  frozen?: boolean;
 }) {
   return (
     <div className="flex w-full max-w-lg flex-col items-center px-6 text-center" role="status" aria-label={label}>
@@ -83,9 +87,9 @@ export function BrandBootScreen({
         initial={{ opacity: 0, scale: 0.94 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        className="h-40 w-40 md:h-48 md:w-48"
+        className="h-40 w-[12.25rem] md:h-48 md:w-[14.7rem]"
       >
-        <AfricaLogoMark stage={stage} motion="assemble" className="h-full w-full" />
+        <AfricaLogoMark stage={stage} motion={frozen ? "static" : "assemble"} className="h-full w-full" />
       </motion.div>
       <BrandWordmark className="mt-6 text-3xl md:text-4xl" />
       <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{BRAND_TAGLINE}</p>

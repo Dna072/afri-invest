@@ -39,7 +39,7 @@ export function AfricaSpinner({
   size?: "sm" | "md" | "lg";
   orbit?: boolean;
 }) {
-  const sizes = { sm: "h-16 w-16", md: "h-24 w-24", lg: "h-40 w-40" };
+  const sizes = { sm: "h-16 w-[4.9rem]", md: "h-24 w-[7.35rem]", lg: "h-40 w-[12.25rem]" };
 
   return (
     <div className={cn("relative flex items-center justify-center", sizes[size], className)} role="status" aria-label="Loading">
