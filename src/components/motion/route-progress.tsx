@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AfricaLogoMark } from "@/components/brand/logo-mark";
@@ -16,7 +17,7 @@ export function RouteProgress() {
       return;
     }
     setOn(true);
-    const id = window.setTimeout(() => setOn(false), 900);
+    const id = window.setTimeout(() => setOn(false), 1400);
     return () => window.clearTimeout(id);
   }, [pathname]);
 
@@ -31,13 +32,22 @@ export function RouteProgress() {
       >
         <div className={cn("h-full w-full origin-left ghana-progress", on && "ghana-progress-run")} />
       </div>
-      {on ? (
-        <div className="pointer-events-none fixed inset-0 z-[69] grid place-items-center" aria-hidden>
-          <div className="flex h-28 w-28 items-center justify-center rounded-3xl bg-background/80 shadow-[var(--shadow-hover)] backdrop-blur-md">
-            <AfricaLogoMark motion="loop" className="h-20 w-20" />
-          </div>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {on ? (
+          <motion.div
+            className="pointer-events-none fixed inset-0 z-[69] grid place-items-center bg-background/35 backdrop-blur-[2px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            aria-hidden
+          >
+            <div className="flex h-32 w-32 items-center justify-center rounded-3xl bg-card/90 shadow-[var(--shadow-hover)]">
+              <AfricaLogoMark motion="loop" className="h-24 w-24" />
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
