@@ -80,13 +80,12 @@ export function BrandBootScreen({
   return (
     <div className="flex w-full max-w-lg flex-col items-center px-6 text-center" role="status" aria-label={label}>
       <motion.div
-        key={stage}
         initial={{ opacity: 0, scale: 0.94 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         className="h-40 w-40 md:h-48 md:w-48"
       >
-        <AfricaLogoMark stage={stage} className="h-full w-full" />
+        <AfricaLogoMark stage={stage} motion="assemble" className="h-full w-full" />
       </motion.div>
       <BrandWordmark className="mt-6 text-3xl md:text-4xl" />
       <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{BRAND_TAGLINE}</p>

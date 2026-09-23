@@ -394,6 +394,68 @@ body {
   animation: logo-breathe 1.8s ease-in-out infinite;
 }
 
+.logo-bar {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.logo-head {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.logo-arrow {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.logo-orbit {
+  transform-origin: center;
+  animation: logo-orbit-spin 8s linear infinite;
+}
+
+.logo-assemble .logo-land,
+.logo-assemble .logo-island {
+  animation: logo-land-in 0.7s var(--ease) both;
+}
+
+.logo-assemble .logo-bar-1 {
+  animation: logo-bar-assemble 0.55s var(--ease) 0.45s both;
+}
+.logo-assemble .logo-bar-2 {
+  animation: logo-bar-assemble 0.55s var(--ease) 0.58s both;
+}
+.logo-assemble .logo-bar-3 {
+  animation: logo-bar-assemble 0.55s var(--ease) 0.7s both;
+}
+.logo-assemble .logo-arrow {
+  stroke-dashoffset: 1;
+  animation: logo-arrow-assemble 0.9s var(--ease) 0.85s both;
+}
+.logo-assemble .logo-head {
+  animation: logo-head-assemble 0.4s var(--ease) 1.45s both;
+}
+
+.logo-loop .logo-land,
+.logo-loop .logo-island {
+  animation: logo-breathe 2.4s ease-in-out infinite;
+}
+.logo-loop .logo-bar-1 {
+  animation: logo-bar-wave 1.7s ease-in-out infinite;
+}
+.logo-loop .logo-bar-2 {
+  animation: logo-bar-wave 1.7s ease-in-out 0.14s infinite;
+}
+.logo-loop .logo-bar-3 {
+  animation: logo-bar-wave 1.7s ease-in-out 0.28s infinite;
+}
+.logo-loop .logo-arrow {
+  animation: logo-arrow-loop 2.4s var(--ease) infinite;
+}
+.logo-loop .logo-head {
+  animation: logo-head-loop 2.4s var(--ease) infinite;
+}
+
 .africa-ring {
   animation: spin 1.8s linear infinite;
 }
@@ -504,6 +566,94 @@ body {
   }
 }
 
+@keyframes logo-bar-assemble {
+  from {
+    transform: scaleY(0.08);
+    opacity: 0.2;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes logo-arrow-assemble {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes logo-head-assemble {
+  from {
+    opacity: 0;
+    transform: scale(0.45) translate(-6px, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+@keyframes logo-land-in {
+  from {
+    opacity: 0.35;
+    filter: saturate(0.2);
+  }
+  to {
+    opacity: 1;
+    filter: saturate(1);
+  }
+}
+
+@keyframes logo-bar-wave {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  45% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes logo-arrow-loop {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  38%,
+  68% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes logo-head-loop {
+  0%,
+  28% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  42%,
+  68% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes logo-orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .rise-in {
   animation: rise-in 0.7s var(--ease) both;
 }
@@ -524,10 +674,27 @@ body {
   .africa-trace,
   .ghana-pulse,
   .ghana-progress-run,
-  .rise-in {
+  .rise-in,
+  .logo-orbit,
+  .logo-assemble .logo-land,
+  .logo-assemble .logo-island,
+  .logo-assemble .logo-bar-1,
+  .logo-assemble .logo-bar-2,
+  .logo-assemble .logo-bar-3,
+  .logo-assemble .logo-arrow,
+  .logo-assemble .logo-head,
+  .logo-loop .logo-land,
+  .logo-loop .logo-island,
+  .logo-loop .logo-bar-1,
+  .logo-loop .logo-bar-2,
+  .logo-loop .logo-bar-3,
+  .logo-loop .logo-arrow,
+  .logo-loop .logo-head {
     animation: none;
   }
-  .africa-trace {
+  .africa-trace,
+  .logo-assemble .logo-arrow,
+  .logo-loop .logo-arrow {
     stroke-dashoffset: 0;
   }
   .africa-liquid {
