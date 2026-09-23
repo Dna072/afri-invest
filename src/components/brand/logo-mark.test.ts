@@ -15,11 +15,11 @@ describe("Africa Invest logo mark", () => {
 
     expect(source).not.toMatch(/from ["']@\/data\/africa["']/);
     expect(source).not.toMatch(/africa-countries\.json|AFRICA_CLIP_PATH/);
-    expect(AFRICA_LOGO_VIEWBOX).toBe("0 0 400 328");
+    expect(AFRICA_LOGO_VIEWBOX).toBe("0 0 183 150");
     expect(AFRICA_LOGO_ART).toBe("/brand/africa-invest-mark.png");
-    expect(AFRICA_LOGO_PATH.startsWith("M108.50")).toBe(true);
-    expect(MADAGASCAR_LOGO_PATH.startsWith("M336.00")).toBe(true);
-    expect(AFRICA_ARROW_PATH.startsWith("M128 196")).toBe(true);
+    expect(AFRICA_LOGO_PATH.startsWith("M52.33")).toBe(true);
+    expect(MADAGASCAR_LOGO_PATH.startsWith("M155.33")).toBe(true);
+    expect(AFRICA_ARROW_PATH.startsWith("M64 99")).toBe(true);
     expect(AFRICA_LOGO_PATH).not.toEqual(AFRICA_CLIP_PATH);
     expect(AFRICA_LOGO_PATH).not.toMatch(/M92 26C128 4/);
     expect(AFRICA_LOGO_PATH.length).toBeGreaterThan(400);

@@ -633,7 +633,7 @@ body {
     opacity: 0.15;
   }
   to {
-    transform: translateX(340px);
+    transform: translateX(180px);
     opacity: 0.85;
   }
 }
