@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AfricaLogoMark, BrandWordmark } from "@/components/brand/logo-mark";
+import { PageLoader } from "@/components/motion/africa-spinner";
 import { BOOT_STAGES, BRAND_TAGLINE, bootProgressAt, bootStageAt, elapsedForStage, type BootStageId } from "@/data/boot";
 
 const BOOT_KEY = "ai-booted";
@@ -13,11 +14,16 @@ export function BootLoader() {
   const [visible, setVisible] = useState(true);
   const [elapsed, setElapsed] = useState(0);
   const [frozen, setFrozen] = useState(false);
+  const [loaderOnly, setLoaderOnly] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const force = params.has("boot");
     const freeze = Number(params.get("stage"));
+    if (params.has("loader")) {
+      setLoaderOnly(true);
+      return;
+    }
     if (freeze >= 1 && freeze <= 4) {
       setElapsed(elapsedForStage(freeze, BOOT_MS));
       setFrozen(true);
@@ -52,6 +58,14 @@ export function BootLoader() {
 
   const stage = bootStageAt(elapsed, BOOT_MS);
   const progress = bootProgressAt(elapsed, BOOT_MS);
+
+  if (loaderOnly) {
+    return (
+      <div className="fixed inset-0 z-[80] flex items-center justify-center bg-background">
+        <PageLoader />
+      </div>
+    );
+  }
 
   return (
     <AnimatePresence>

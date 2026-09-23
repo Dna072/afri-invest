@@ -44,7 +44,6 @@ export function AfricaLogoMark({
 }) {
   const uid = useId().replace(/:/g, "");
   const animated = motionMode !== "static";
-  const showGrowth = animated;
   const reveal = animated ? 100 : STAGE_REVEAL[stage];
 
   return (
@@ -56,10 +55,6 @@ export function AfricaLogoMark({
     >
       {title ? <title>{title}</title> : null}
       <defs>
-        <linearGradient id={`${uid}-arrow`} x1="12%" y1="88%" x2="92%" y2="8%">
-          <stop offset="0%" stopColor="#3cb043" />
-          <stop offset="100%" stopColor="#1e7a2c" />
-        </linearGradient>
         <linearGradient id={`${uid}-shine`} x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor="#fff" stopOpacity="0" />
           <stop offset="45%" stopColor="#fff" stopOpacity="0" />
@@ -82,20 +77,6 @@ export function AfricaLogoMark({
         style={animated ? undefined : { clipPath: `inset(0 0 ${100 - reveal}% 0)` }}
         opacity={stage === 1 && !animated ? 0.72 : 1}
       />
-      {showGrowth ? (
-        <g className="logo-growth">
-          <path
-            className="logo-arrow"
-            d={AFRICA_ARROW_PATH}
-            fill="none"
-            stroke={`url(#${uid}-arrow)`}
-            strokeWidth="8.2"
-            strokeLinecap="round"
-            pathLength={1}
-          />
-          <path className="logo-head" d={AFRICA_ARROW_HEAD} fill="#1e7a2c" />
-        </g>
-      ) : null}
       {motionMode === "loop" ? (
         <rect
           className="logo-shine"
